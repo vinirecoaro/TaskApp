@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TasksApp</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="login">Login</string>
+    <string name="forgot_my_password">Esqueci minha senha</string>
+    <string name="register_login_screen">Não tem uma conta? Cadastre-se</string>
 </resources>
