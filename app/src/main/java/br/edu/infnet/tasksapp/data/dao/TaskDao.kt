@@ -11,13 +11,13 @@ import br.edu.infnet.tasksapp.data.model.TaskEntity
 interface TaskDao {
 
     @Insert
-    fun insertAll(vararg tasks : TaskEntity)
+    fun insert(task : TaskEntity)
 
     @Query("SELECT * FROM tasks")
-    fun getAll()
+    fun getAll() : List<TaskEntity>
 
     @Update
-    fun updateTasks(vararg tasks : TaskEntity)
+    fun update(task : TaskEntity)
 
     @Delete
     fun delete(task : TaskEntity)
