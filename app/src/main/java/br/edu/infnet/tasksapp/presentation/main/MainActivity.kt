@@ -7,6 +7,7 @@ import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import br.edu.infnet.tasksapp.R
+import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -59,4 +60,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
+
 }
