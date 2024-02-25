@@ -1,14 +1,15 @@
-package br.edu.infnet.tasksapp
+package br.edu.infnet.tasksapp.presentation.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.infnet.tasksapp.databinding.ItemTaskBinding
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
 
-class TaskAdapter : androidx.recyclerview.widget.ListAdapter<TaskDomain, TaskAdapter.ViewHolder>(DiffCalback()){
+class TaskAdapter : androidx.recyclerview.widget.ListAdapter<TaskDomain, TaskAdapter.ViewHolder>(
+    DiffCalback()
+){
 
     var click : (TaskDomain) -> Unit = {}
 

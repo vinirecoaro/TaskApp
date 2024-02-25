@@ -1,4 +1,4 @@
-package br.edu.infnet.tasksapp
+package br.edu.infnet.tasksapp.presentation.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -5,4 +5,5 @@
     <string name="login">Login</string>
     <string name="forgot_my_password">Esqueci minha senha</string>
     <string name="register_login_screen">Não tem uma conta? Cadastre-se</string>
+    <string name="label_empty_tasks">Não temos nenhuma tarefa</string>
 </resources>
