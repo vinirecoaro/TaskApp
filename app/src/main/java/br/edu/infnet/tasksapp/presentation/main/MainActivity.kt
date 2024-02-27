@@ -7,8 +7,7 @@ import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import br.edu.infnet.tasksapp.R
-import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextFragment
-
+import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val adapter by lazy { TaskAdapter() }
+    val dialogEditTextActivity = DialogEditTextActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupListener(){
         binding.fabAdd.setOnClickListener{
-
+            showDialog()
         }
     }
 
@@ -54,12 +54,24 @@ class MainActivity : AppCompatActivity() {
 
                 is MainActivityState.Success -> {
                     binding.pbTasks.isVisible = false
-                    adapter.submitList(state.tasks)
+                    val tasks = state.tasks
+                    adapter.submitList(tasks)
                 }
             }
 
         }
     }
 
+    private fun showDialog(){
+        dialogEditTextActivity.showDialog(
+            title = getString(R.string.title_new_task),
+            topicTitle1 = getString(R.string.subtitle_new_task_title),
+            placeHolder1 = getString(R.string.label_new_task_name),
+            topicTitle2 = getString(R.string.subtitle_new_task_description),
+            placeHolder2 = getString(R.string.label_new_task_description)
+        ){results ->
+            viewModel.insert(results.first, results.second)
+        }
+    }
 
 }
