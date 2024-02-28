@@ -1,10 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.main
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import br.edu.infnet.tasksapp.data.db
@@ -16,8 +13,10 @@ import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onStart
 
 class MainActivityViewModel(
     private val getAllTasksUseCase : GetAllTasksUseCase,
@@ -25,20 +24,27 @@ class MainActivityViewModel(
     private val updateTasksUseCase: UpdateTasksUseCase
 ) : ViewModel() {
 
-    val state : LiveData<MainActivityState> = liveData {
-        emit(MainActivityState.Loading)
-        val state = try {
-            val tasks = getAllTasksUseCase()
-            if(tasks.isEmpty()){
-                MainActivityState.Empty
-            }else{
-                MainActivityState.Success(tasks)
+    private val _state = MutableSharedFlow<MainActivityState>()
+    val state : SharedFlow<MainActivityState> = _state
+
+    init {
+        getAllTasks()
+    }
+
+    private fun getAllTasks() = viewModelScope.launch {
+        getAllTasksUseCase()
+            .flowOn(Dispatchers.Main)
+            .onStart {
+                _state.emit(MainActivityState.Loading)
+            }.catch {
+                _state.emit(MainActivityState.Error("Erro"))
+            }.collect {tasks ->
+                if(tasks.isEmpty()){
+                    _state.emit(MainActivityState.Empty)
+                }else{
+                    _state.emit(MainActivityState.Success(tasks))
+                }
             }
-        }catch (e : Exception){
-            Log.e("Error", e.message.toString())
-            MainActivityState.Error(e.message.toString())
-        }
-        emit(state)
     }
 
     fun insert(title : String, description : String) = viewModelScope.launch{

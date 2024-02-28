@@ -6,10 +6,15 @@ import android.widget.Toast
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
-import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -74,6 +79,14 @@ class MainActivity : AppCompatActivity() {
             placeHolder2 = getString(R.string.label_new_task_description)
         ){results ->
             viewModel.insert(results.first, results.second)
+        }
+    }
+
+    fun<T> Flow<T>.observe(owner : LifecycleOwner, observe : (T) -> Unit){
+        owner.lifecycleScope.launch {
+            owner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                this@observe.collect(observe)
+            }
         }
     }
 
