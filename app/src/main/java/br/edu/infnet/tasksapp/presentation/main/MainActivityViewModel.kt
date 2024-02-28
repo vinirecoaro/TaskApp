@@ -13,7 +13,11 @@ import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.domain.usecase.GetAllTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.flowOn
 
 class MainActivityViewModel(
     private val getAllTasksUseCase : GetAllTasksUseCase,

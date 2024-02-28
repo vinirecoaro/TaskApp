@@ -6,7 +6,9 @@ import android.widget.Toast
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
+import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 
 class MainActivity : AppCompatActivity() {
@@ -15,13 +17,14 @@ class MainActivity : AppCompatActivity() {
         MainActivityViewModel.Factory()
     }
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
-    private val adapter by lazy { TaskAdapter() }
+    private val adapter by lazy { TaskAdapter(emptyList()) }
     val dialogEditTextActivity = DialogEditTextActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.rvTasks.layoutManager = LinearLayoutManager(this)
         setupAdapter()
         setupListener()
         observeStates()
@@ -31,10 +34,6 @@ class MainActivity : AppCompatActivity() {
         binding.fabAdd.setOnClickListener{
             showDialog()
         }
-    }
-
-    private fun setupAdapter(){
-        binding.rvTasks.adapter = adapter
     }
 
     private fun observeStates(){
@@ -55,11 +54,15 @@ class MainActivity : AppCompatActivity() {
                 is MainActivityState.Success -> {
                     binding.pbTasks.isVisible = false
                     val tasks = state.tasks
-                    adapter.submitList(tasks)
+                    adapter.updateList(tasks)
                 }
             }
 
         }
+    }
+
+    private fun setupAdapter(){
+        binding.rvTasks.adapter = adapter
     }
 
     private fun showDialog(){

@@ -60,6 +60,9 @@ dependencies {
     //fragment
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
+    //coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
