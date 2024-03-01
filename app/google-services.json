@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154258353403",
+    "project_id": "tasksapp-508ce",
+    "storage_bucket": "tasksapp-508ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154258353403:android:dfd4124bf17ca59a12545e",
+        "android_client_info": {
+          "package_name": "br.edu.infnet.tasksapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIXFpXnOyH0NHGm1fsyLuT5xlqCffixtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

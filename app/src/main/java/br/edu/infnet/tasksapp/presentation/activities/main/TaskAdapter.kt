@@ -1,4 +1,4 @@
-package br.edu.infnet.tasksapp.presentation.main
+package br.edu.infnet.tasksapp.presentation.activities.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

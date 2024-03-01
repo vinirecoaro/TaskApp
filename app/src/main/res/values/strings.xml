@@ -11,4 +11,8 @@
     <string name="subtitle_new_task_title">Nome</string>
     <string name="subtitle_new_task_description">Descrição</string>
     <string name="title_new_task">Nova Tarefa</string>
+    <string name="name">Nome</string>
+    <string name="register">Cadastrar</string>
+    <string name="verification_email_message">E-mail de validação da conta enviado.\nVerificar caixa de e-mail.</string>
+    <string name="resent_email">Reeviar email</string>
 </resources>

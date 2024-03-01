@@ -1,4 +1,4 @@
-package br.edu.infnet.tasksapp.presentation.main
+package br.edu.infnet.tasksapp.presentation.activities.main
 
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
 

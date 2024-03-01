@@ -1,5 +1,6 @@
-package br.edu.infnet.tasksapp.presentation.main
+package br.edu.infnet.tasksapp.presentation.activities.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
+import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -38,6 +40,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupListener(){
         binding.fabAdd.setOnClickListener{
             showDialog()
+        }
+        adapter.click = { taskItem ->
+            val intent = Intent(this, EditTaskActivity::class.java)
+            startActivity(intent)
         }
     }
 
