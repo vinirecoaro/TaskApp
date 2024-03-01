@@ -57,8 +57,5 @@ class FirebaseAPI private constructor(){
         return@withContext auth.signOut()
     }
 
-    suspend fun verifyIfUserExists(): Task<SignInMethodQueryResult>  = withContext(Dispatchers.IO){
-        return@withContext auth.fetchSignInMethodsForEmail(currentUser()?.email.toString())
-    }
 
 }

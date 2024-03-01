@@ -16,27 +16,23 @@ class LogoViewModel : ViewModel() {
     suspend fun isLogged() : Deferred<Boolean> {
         val result = CompletableDeferred<Boolean>()
         viewModelScope.async(Dispatchers.IO) {
-            val currentUser = firebaseAPI.currentUser()
-            if (currentUser != null) {
-                try {
-                    val providers = firebaseAPI.verifyIfUserExists().await()
-                    if (providers.signInMethods?.isNotEmpty() == true) {
-                        onUserLogged()
-                        result.complete(true)
-                    } else {
-                        onError("Erro ao verificar o usuário")
-                        result.complete(false)
-                    }
-                } catch (e: Exception) {
+            try {
+                val currentUser = firebaseAPI.currentUser()
+                if (currentUser != null) {
+                    onUserLogged()
+                    result.complete(true)
+                }else{
                     onError("Erro ao verificar o usuário")
                     result.complete(false)
                 }
+            } catch (e: Exception) {
+                onError("Erro ao verificar o usuário")
+                result.complete(false)
             }
             result.complete(false)
         }
         return result
     }
-
     var onUserLogged: () -> Unit = {}
     var onError: (String) -> Unit = {}
 }
