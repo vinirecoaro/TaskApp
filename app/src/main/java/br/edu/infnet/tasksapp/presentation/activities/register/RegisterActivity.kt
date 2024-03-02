@@ -24,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.registerToolbar.setTitle("Registrar")
+        binding.registerToolbar.setTitle(getString(R.string.register))
         binding.registerToolbar.setTitleTextColor(Color.WHITE)
 
         //Insert a back button on Navigation bar
@@ -64,11 +64,11 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         viewModel.onSendEmailSuccess = {
-            Snackbar.make(binding.btRegister, "Email de verificação enviado com sucesso.", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.btRegister, getString(R.string.sent_email_verification_message_success), Snackbar.LENGTH_LONG).show()
         }
 
         viewModel.onSendEmailFailure = {
-            Snackbar.make(binding.btRegister, "Erro ao enviar email de verificação.", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.btRegister, R.string.sent_email_verification_error, Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -88,7 +88,7 @@ class RegisterActivity : AppCompatActivity() {
         for (i in text) {
             if (i.text.toString() == "" || i == null) {
                 Snackbar.make(
-                    binding.btRegister, "Preencher o campo ${i.hint}", Snackbar.LENGTH_LONG
+                    binding.btRegister, "${getString(R.string.fill_field)} ${i.hint}", Snackbar.LENGTH_LONG
                 ).show()
                 return false
             }

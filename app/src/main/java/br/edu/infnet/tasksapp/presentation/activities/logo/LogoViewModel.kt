@@ -1,7 +1,9 @@
 package br.edu.infnet.tasksapp.presentation.activities.logo
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.api.FirebaseAPI
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
@@ -9,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
 
-class LogoViewModel : ViewModel() {
+class LogoViewModel(private val context : Context) : ViewModel() {
 
     private val firebaseAPI = FirebaseAPI.instance
 
@@ -22,11 +24,11 @@ class LogoViewModel : ViewModel() {
                     onUserLogged()
                     result.complete(true)
                 }else{
-                    onError("Erro ao verificar o usuário")
+                    onError(context.getString(R.string.sent_email_verification_error))
                     result.complete(false)
                 }
             } catch (e: Exception) {
-                onError("Erro ao verificar o usuário")
+                onError(context.getString(R.string.sent_email_verification_error))
                 result.complete(false)
             }
             result.complete(false)

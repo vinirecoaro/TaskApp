@@ -12,7 +12,22 @@
     <string name="subtitle_new_task_description">Descrição</string>
     <string name="title_new_task">Nova Tarefa</string>
     <string name="name">Nome</string>
-    <string name="register">Cadastrar</string>
+    <string name="to_register">Cadastrar</string>
+    <string name="register">Cadastro</string>
     <string name="verification_email_message">E-mail de validação da conta enviado.\nVerificar caixa de e-mail.</string>
     <string name="resent_email">Reeviar email</string>
+    <string name="tasks">Tarefas</string>
+    <string name="edit_task">Editar Tarefa</string>
+    <string name="email_sent">Email Eviado</string>
+    <string name="redefine_password_success_message">Email de redefinição de senha enviado com sucesso</string>
+    <string name="sent_email_verification_message_success">Email de verificação enviado com sucesso</string>
+    <string name="sent_email_verification_error">Erro ao enviar email de verificação</string>
+    <string name="fill_field">Preencher o campo</string>
+    <string name="create_account_error">Ocorreu um erro ao criar a conta. Tente novamente mais tarde</string>
+    <string name="login_error">Ocorreu um erro ao fazer login. Tente novamente mais tarde</string>
+    <string name="invalid_email_password">Email ou senha inválidos</string>
+    <string name="email_already_used">Este email já está em uso</string>
+    <string name="min_password_char_message">A senha deve ter pelo menos 6 caracteres</string>
+    <string name="user_verification_error">Erro ao verificar o usuário</string>
+
 </resources>

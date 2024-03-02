@@ -1,7 +1,9 @@
 package br.edu.infnet.tasksapp.presentation.activities.register
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.api.FirebaseAPI
 import br.edu.infnet.tasksapp.domain.model.User
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -11,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(private val context : Context) : ViewModel() {
 
     private val firebaseAPI = FirebaseAPI.instance
     suspend fun createUser(name : String, email: String, password: String) {
@@ -23,16 +25,16 @@ class RegisterViewModel : ViewModel() {
                     firebaseAPI.addNewUserOnDatabase(user.name)
                     onUserCreated()
                 } else {
-                    val message = "Ocorreu um erro ao criar a conta. Tente novamente mais tarde."
+                    val message = context.getString(R.string.create_account_error)
                     onError(message)
                 }
             }
         }catch (exception : Exception){
             val message = when (exception) {
-                is FirebaseAuthInvalidCredentialsException -> "E-mail ou senha inválidos."
-                is FirebaseAuthUserCollisionException -> "Este e-mail já está em uso."
-                is FirebaseAuthWeakPasswordException -> "A senha deve ter pelo menos 6 caracteres."
-                else -> "Ocorreu um erro ao criar a conta. Tente novamente mais tarde."
+                is FirebaseAuthInvalidCredentialsException -> context.getString(R.string.invalid_email_password)
+                is FirebaseAuthUserCollisionException -> context.getString(R.string.email_already_used)
+                is FirebaseAuthWeakPasswordException -> context.getString(R.string.min_password_char_message)
+                else -> context.getString(R.string.create_account_error)
             }
             onError(message)
         }

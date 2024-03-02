@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.registerToolbar.setTitle("Tarefas")
+        binding.registerToolbar.setTitle(getString(R.string.tasks))
         binding.registerToolbar.setTitleTextColor(Color.WHITE)
 
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
@@ -45,10 +45,7 @@ class MainActivity : AppCompatActivity() {
         binding.fabAdd.setOnClickListener{
             showDialog()
         }
-        adapter.click = { taskItem ->
-            val intent = Intent(this, EditTaskActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 
     private fun observeStates(){

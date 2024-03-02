@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import androidx.lifecycle.lifecycleScope
+import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityLoginBinding
 import br.edu.infnet.tasksapp.presentation.activities.main.MainActivity
 import br.edu.infnet.tasksapp.presentation.activities.register.RegisterActivity
@@ -53,9 +54,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun resetPasswordSucess(){
-        val result = intent.getBooleanExtra("Email Enviado",false)
+        val result = intent.getBooleanExtra(getString(R.string.email_sent),false)
         if(result){
-            Toast.makeText(this,"Email de redefinição de senha enviado com sucesso", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,getString(R.string.redefine_password_success_message), Toast.LENGTH_LONG).show()
         }
     }
 
