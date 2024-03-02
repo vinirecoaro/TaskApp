@@ -1,6 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.activities.main
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.registerToolbar.setTitle("Tarefas")
+        binding.registerToolbar.setTitleTextColor(Color.WHITE)
 
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
         setupAdapter()
