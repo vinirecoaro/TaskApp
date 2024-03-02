@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityEditTaskBinding
+import br.edu.infnet.tasksapp.domain.model.TaskDomain
 
 class EditTaskActivity : AppCompatActivity() {
 
@@ -21,6 +22,7 @@ class EditTaskActivity : AppCompatActivity() {
         setSupportActionBar(binding.editTaskToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        getTaskInfo()
         setupListeners()
 
     }
@@ -28,6 +30,14 @@ class EditTaskActivity : AppCompatActivity() {
     private fun setupListeners(){
         binding.editTaskToolbar.setNavigationOnClickListener {
             finish()
+        }
+    }
+
+    private fun getTaskInfo(){
+        val task = intent.getParcelableExtra<TaskDomain>("task")
+        if(task != null){
+            binding.etTitleEditTask.setText(task.title)
+            binding.etDescriptionEditTask.setText(task.description)
         }
     }
 }

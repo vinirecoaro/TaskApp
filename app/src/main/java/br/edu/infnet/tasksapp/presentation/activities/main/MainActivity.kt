@@ -51,7 +51,11 @@ class MainActivity : AppCompatActivity() {
         binding.fabAdd.setOnClickListener{
             showDialog()
         }
-
+        adapter.onItemClick = {
+            val intent = Intent(this,EditTaskActivity::class.java)
+            intent.putExtra("task", it)
+            startActivity(intent)
+        }
     }
 
     private fun observeStates(){

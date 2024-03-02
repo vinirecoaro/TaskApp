@@ -9,6 +9,8 @@ import br.edu.infnet.tasksapp.domain.model.TaskDomain
 
 class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapter<TaskAdapter.ViewHolder>(){
 
+    var onItemClick : ((TaskDomain) -> Unit)? = null
+
     class ViewHolder(private val binding : ItemTaskBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item : TaskDomain){
@@ -32,7 +34,11 @@ class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(taskList[position])
+        val task = taskList[position]
+        holder.bind(task)
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(task)
+        }
     }
 
     fun updateList(newList: List<TaskDomain>){
