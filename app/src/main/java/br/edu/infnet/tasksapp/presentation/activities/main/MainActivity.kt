@@ -4,6 +4,9 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
+import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -34,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.registerToolbar.setTitle(getString(R.string.tasks))
         binding.registerToolbar.setTitleTextColor(Color.WHITE)
+
+       setSupportActionBar(binding.registerToolbar)
 
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
         setupAdapter()
@@ -87,6 +93,24 @@ class MainActivity : AppCompatActivity() {
         ){results ->
             viewModel.insert(results.first, results.second)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item!!.itemId){
+            R.id.main_activity_menu_logoff -> {
+                lifecycleScope.launch {
+                    viewModel.logoff()
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                    finish()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun<T> Flow<T>.observe(owner : LifecycleOwner, observe : (T) -> Unit){

@@ -29,5 +29,6 @@
     <string name="email_already_used">Este email já está em uso</string>
     <string name="min_password_char_message">A senha deve ter pelo menos 6 caracteres</string>
     <string name="user_verification_error">Erro ao verificar o usuário</string>
+    <string name="logoff">Sair</string>
 
 </resources>

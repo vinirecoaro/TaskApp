@@ -1,6 +1,8 @@
 package br.edu.infnet.tasksapp.presentation.activities.login
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.R
@@ -9,7 +11,7 @@ import br.edu.infnet.tasksapp.domain.model.User
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import kotlinx.coroutines.*
 
-class LoginViewModel(private val context : Context) : ViewModel() {
+class LoginViewModel(application : Application) : AndroidViewModel(application) {
 
     private val firebaseAPI = FirebaseAPI.instance
 
@@ -25,8 +27,8 @@ class LoginViewModel(private val context : Context) : ViewModel() {
                     } else {
                         successLogin.complete(false)
                         val message = when (task.exception) {
-                            is FirebaseAuthInvalidCredentialsException -> context.getString(R.string.invalid_email_password)
-                            else -> context.getString(R.string.login_error)
+                            is FirebaseAuthInvalidCredentialsException -> getApplication<Application>().resources.getString(R.string.invalid_email_password)
+                            else -> getApplication<Application>().resources.getString(R.string.login_error)
                         }
                         onError(message)
                     }

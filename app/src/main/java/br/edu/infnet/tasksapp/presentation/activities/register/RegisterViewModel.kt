@@ -1,6 +1,8 @@
 package br.edu.infnet.tasksapp.presentation.activities.register
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.R
@@ -13,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
 
-class RegisterViewModel(private val context : Context) : ViewModel() {
+class RegisterViewModel(application : Application) : AndroidViewModel(application) {
 
     private val firebaseAPI = FirebaseAPI.instance
     suspend fun createUser(name : String, email: String, password: String) {
@@ -25,16 +27,16 @@ class RegisterViewModel(private val context : Context) : ViewModel() {
                     firebaseAPI.addNewUserOnDatabase(user.name)
                     onUserCreated()
                 } else {
-                    val message = context.getString(R.string.create_account_error)
+                    val message = getApplication<Application>().resources.getString(R.string.create_account_error)
                     onError(message)
                 }
             }
         }catch (exception : Exception){
             val message = when (exception) {
-                is FirebaseAuthInvalidCredentialsException -> context.getString(R.string.invalid_email_password)
-                is FirebaseAuthUserCollisionException -> context.getString(R.string.email_already_used)
-                is FirebaseAuthWeakPasswordException -> context.getString(R.string.min_password_char_message)
-                else -> context.getString(R.string.create_account_error)
+                is FirebaseAuthInvalidCredentialsException -> getApplication<Application>().resources.getString(R.string.invalid_email_password)
+                is FirebaseAuthUserCollisionException -> getApplication<Application>().resources.getString(R.string.email_already_used)
+                is FirebaseAuthWeakPasswordException -> getApplication<Application>().resources.getString(R.string.min_password_char_message)
+                else -> getApplication<Application>().resources.getString(R.string.create_account_error)
             }
             onError(message)
         }

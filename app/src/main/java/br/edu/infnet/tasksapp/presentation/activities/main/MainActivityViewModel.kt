@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import br.edu.infnet.tasksapp.api.FirebaseAPI
 import br.edu.infnet.tasksapp.data.db
 import br.edu.infnet.tasksapp.data.repository.TaskRepositoryImpl
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
@@ -11,6 +12,7 @@ import br.edu.infnet.tasksapp.domain.usecase.GetAllTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
@@ -26,6 +28,7 @@ class MainActivityViewModel(
 
     private val _state = MutableSharedFlow<MainActivityState>()
     val state : SharedFlow<MainActivityState> = _state
+    private val firebaseAPI = FirebaseAPI.instance
 
     init {
         getAllTasks()
@@ -60,6 +63,12 @@ class MainActivityViewModel(
             title = title,
             description = description
         ))
+    }
+
+    suspend fun logoff(){
+        viewModelScope.async (Dispatchers.IO){
+            firebaseAPI.logoff()
+        }
     }
 
     class Factory : ViewModelProvider.Factory{
