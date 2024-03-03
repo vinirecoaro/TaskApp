@@ -30,7 +30,15 @@
     <string name="min_password_char_message">A senha deve ter pelo menos 6 caracteres</string>
     <string name="user_verification_error">Erro ao verificar o usuário</string>
     <string name="logoff">Sair</string>
+    <string name="to_confirm">Confirmar</string>
+    <string name="to_cancel">Cancelar</string>
     <string name="task_intent">task</string>
+    <string name="edit_intent">edit</string>
+    <string name="delete_intent">delete</string>
+    <string name="edit_task_success_message">Tarefa editada com sucesso</string>
+    <string name="delete_task_success_message">Tarefa excluida com sucesso</string>
+    <string name="delete_task_alert_dialog_message">Deseja excluir esta tarefa?</string>
+    <string name="delete_task_alert_dialog_title">Excluir Tarefa</string>
 
 
 </resources>

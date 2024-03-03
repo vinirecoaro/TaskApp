@@ -1,6 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.activities.edit_task
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -51,22 +52,13 @@ class EditTaskActivity : AppCompatActivity() {
                     binding.etDescriptionEditTask.text.toString()
                 )
                 val resultIntent = Intent().apply {
-                    putExtra("edit", "edit")
+                    putExtra(getString(R.string.edit_intent), getString(R.string.edit_intent))
                 }
                 setResult(Activity.RESULT_OK,resultIntent)
                 finish()
             }
             R.id.delete_edit_task_menu -> {
-                viewModel.delete(
-                    task!!.id,
-                    binding.etTitleEditTask.text.toString(),
-                    binding.etDescriptionEditTask.text.toString()
-                )
-                val resultIntent = Intent().apply {
-                    putExtra("edit", "delete")
-                }
-                setResult(Activity.RESULT_OK,resultIntent)
-                finish()
+                deleteAlertDialog(task!!)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -85,4 +77,29 @@ class EditTaskActivity : AppCompatActivity() {
             binding.etDescriptionEditTask.setText(task.description)
         }
     }
+
+    private fun deleteAlertDialog(task : TaskDomain){
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.delete_task_alert_dialog_title))
+            .setMessage(getString(R.string.delete_task_alert_dialog_message))
+            .setPositiveButton(getString(R.string.to_confirm)){_,_ ->
+                viewModel.delete(
+                    task.id,
+                    binding.etTitleEditTask.text.toString(),
+                    binding.etDescriptionEditTask.text.toString()
+                )
+                val resultIntent = Intent().apply {
+                    putExtra(getString(R.string.edit_intent), getString(R.string.delete_intent))
+                }
+                setResult(Activity.RESULT_OK,resultIntent)
+                finish()
+            }
+            .setNegativeButton(getString(R.string.to_cancel)){dialog,_ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
+    }
+
 }

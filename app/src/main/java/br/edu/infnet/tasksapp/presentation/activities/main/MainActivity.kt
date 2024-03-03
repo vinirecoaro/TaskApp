@@ -38,12 +38,12 @@ class MainActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.getAllTasks()
             val data: Intent? = result.data
-            val toastMessage = data?.getStringExtra("edit")
+            val toastMessage = data?.getStringExtra(getString(R.string.edit_intent))
             if (!toastMessage.isNullOrEmpty()) {
-                if(toastMessage == "edit"){
-                    Toast.makeText(this@MainActivity, "Tarefa editada com sucesso", Toast.LENGTH_SHORT).show()
-                }else if(toastMessage == "delete"){
-                    Toast.makeText(this@MainActivity, "Tarefa excluida com sucesso", Toast.LENGTH_SHORT).show()
+                if(toastMessage == getString(R.string.edit_intent)){
+                    Toast.makeText(this@MainActivity, getString(R.string.edit_task_success_message), Toast.LENGTH_SHORT).show()
+                }else if(toastMessage == getString(R.string.delete_intent)){
+                    Toast.makeText(this@MainActivity, getString(R.string.delete_task_success_message), Toast.LENGTH_SHORT).show()
                 }
             }
         }
