@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/delete_edit_task_menu"
+        android:title=""
+        android:icon="@drawable/trash_icon_dark"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/save_edit_task_menu"
+        android:title=""
+        android:icon="@drawable/save_icon_dark"
+        app:showAsAction="ifRoom"
+        />
+</menu>

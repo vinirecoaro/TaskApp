@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.onStart
 class MainActivityViewModel(
     private val getAllTasksUseCase : GetAllTasksUseCase,
     private val insertTasksUseCase: InsertTasksUseCase,
-    private val updateTasksUseCase: UpdateTasksUseCase
 ) : ViewModel() {
 
     private val _state = MutableSharedFlow<MainActivityState>()
@@ -57,14 +56,6 @@ class MainActivityViewModel(
         ))
     }
 
-    fun update(id : Int, title : String, description : String) = viewModelScope.launch {
-        updateTasksUseCase(TaskDomain(
-            id = id,
-            title = title,
-            description = description
-        ))
-    }
-
     suspend fun logoff(){
         viewModelScope.async (Dispatchers.IO){
             firebaseAPI.logoff()
@@ -81,7 +72,6 @@ class MainActivityViewModel(
             return MainActivityViewModel(
                 getAllTasksUseCase = GetAllTasksUseCase(repository),
                 insertTasksUseCase = InsertTasksUseCase(repository),
-                updateTasksUseCase = UpdateTasksUseCase(repository)
             ) as T
         }
     }

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.onItemClick = {
             val intent = Intent(this,EditTaskActivity::class.java)
-            intent.putExtra("task", it)
+            intent.putExtra(getString(R.string.task_intent), it)
             startActivity(intent)
         }
     }
