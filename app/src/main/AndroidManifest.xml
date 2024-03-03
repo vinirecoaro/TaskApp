@@ -13,8 +13,11 @@
         android:theme="@style/Theme.TasksApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.activities.reset_password.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.activities.logo.LogoActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,8 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.activities.login.LoginActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".presentation.activities.main.MainActivity"
             android:exported="true" />

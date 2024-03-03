@@ -19,6 +19,7 @@
     <string name="tasks">Tarefas</string>
     <string name="edit_task">Editar Tarefa</string>
     <string name="email_sent">Email Eviado</string>
+    <string name="to_sent">Enviar</string>
     <string name="redefine_password_success_message">Email de redefinição de senha enviado com sucesso</string>
     <string name="sent_email_verification_message_success">Email de verificação enviado com sucesso</string>
     <string name="sent_email_verification_error">Erro ao enviar email de verificação</string>
@@ -26,6 +27,8 @@
     <string name="create_account_error">Ocorreu um erro ao criar a conta. Tente novamente mais tarde</string>
     <string name="login_error">Ocorreu um erro ao fazer login. Tente novamente mais tarde</string>
     <string name="invalid_email_password">Email ou senha inválidos</string>
+    <string name="redefine_password">Redefinir Senha</string>
+    <string name="fail_redefine_password_message">Falha ao enviar email de redefinição de senha</string>
     <string name="email_already_used">Este email já está em uso</string>
     <string name="min_password_char_message">A senha deve ter pelo menos 6 caracteres</string>
     <string name="user_verification_error">Erro ao verificar o usuário</string>

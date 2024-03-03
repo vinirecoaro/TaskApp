@@ -11,6 +11,7 @@ import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityLoginBinding
 import br.edu.infnet.tasksapp.presentation.activities.main.MainActivity
 import br.edu.infnet.tasksapp.presentation.activities.register.RegisterActivity
+import br.edu.infnet.tasksapp.presentation.activities.reset_password.ResetPasswordActivity
 import br.edu.infnet.tasksapp.presentation.activities.verify_email.VerifyEmailActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,9 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+        }
+        binding.tvRedifinePassword.setOnClickListener {
+            startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
         viewModel.onUserLogged = {
             startActivity(Intent(this, MainActivity::class.java))

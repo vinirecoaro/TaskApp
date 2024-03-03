@@ -57,5 +57,8 @@ class FirebaseAPI private constructor(){
         return@withContext auth.signOut()
     }
 
+    suspend fun resetPassword(email : String) = withContext(Dispatchers.IO){
+        return@withContext auth.sendPasswordResetEmail(email)
+    }
 
 }
