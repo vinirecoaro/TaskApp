@@ -1,5 +1,6 @@
 package br.edu.infnet.tasksapp.presentation.activities.main
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -32,6 +34,21 @@ class MainActivity : AppCompatActivity() {
     private val adapter by lazy { TaskAdapter(emptyList()) }
     val dialogEditTextActivity = DialogEditTextActivity(this)
 
+    private val editTaskContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getAllTasks()
+            val data: Intent? = result.data
+            val toastMessage = data?.getStringExtra("edit")
+            if (!toastMessage.isNullOrEmpty()) {
+                if(toastMessage == "edit"){
+                    Toast.makeText(this@MainActivity, "Tarefa editada com sucesso", Toast.LENGTH_SHORT).show()
+                }else if(toastMessage == "delete"){
+                    Toast.makeText(this@MainActivity, "Tarefa excluida com sucesso", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -54,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         adapter.onItemClick = {
             val intent = Intent(this,EditTaskActivity::class.java)
             intent.putExtra(getString(R.string.task_intent), it)
-            startActivity(intent)
+            editTaskContract.launch(intent)
         }
     }
 

@@ -7,15 +7,25 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import br.edu.infnet.tasksapp.data.db
 import br.edu.infnet.tasksapp.data.repository.TaskRepositoryImpl
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
+import br.edu.infnet.tasksapp.domain.usecase.DeleteTaskUseCase
 import br.edu.infnet.tasksapp.domain.usecase.GetAllTasksUseCase
-import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
-import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityViewModel
 import kotlinx.coroutines.launch
 
-class EditTaskViewModel(private val updateTasksUseCase: UpdateTasksUseCase) : ViewModel() {
+class EditTaskViewModel(
+    private val updateTasksUseCase: UpdateTasksUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase
+) : ViewModel() {
     fun update(id : Int, title : String, description : String) = viewModelScope.launch {
         updateTasksUseCase(TaskDomain(
+            id = id,
+            title = title,
+            description = description
+        ))
+    }
+
+    fun delete(id : Int, title : String, description : String) = viewModelScope.launch {
+        deleteTaskUseCase(TaskDomain(
             id = id,
             title = title,
             description = description
@@ -31,6 +41,7 @@ class EditTaskViewModel(private val updateTasksUseCase: UpdateTasksUseCase) : Vi
             val repository = TaskRepositoryImpl(application.db.taskDao())
             return EditTaskViewModel(
                 updateTasksUseCase = UpdateTasksUseCase(repository),
+                deleteTaskUseCase = DeleteTaskUseCase(repository)
             ) as T
         }
     }

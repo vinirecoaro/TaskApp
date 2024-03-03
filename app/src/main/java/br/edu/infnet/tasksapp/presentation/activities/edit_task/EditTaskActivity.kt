@@ -1,5 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.activities.edit_task
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -48,10 +50,23 @@ class EditTaskActivity : AppCompatActivity() {
                     binding.etTitleEditTask.text.toString(),
                     binding.etDescriptionEditTask.text.toString()
                 )
+                val resultIntent = Intent().apply {
+                    putExtra("edit", "edit")
+                }
+                setResult(Activity.RESULT_OK,resultIntent)
                 finish()
             }
             R.id.delete_edit_task_menu -> {
-
+                viewModel.delete(
+                    task!!.id,
+                    binding.etTitleEditTask.text.toString(),
+                    binding.etDescriptionEditTask.text.toString()
+                )
+                val resultIntent = Intent().apply {
+                    putExtra("edit", "delete")
+                }
+                setResult(Activity.RESULT_OK,resultIntent)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)

@@ -24,4 +24,8 @@ class TaskRepositoryImpl(private val dao : TaskDao) : TaskRepository {
     override suspend fun update(task: TaskDomain) = withContext(Dispatchers.IO){
         dao.update(task.toEntity())
     }
+
+    override suspend fun delete(task: TaskDomain) = withContext(Dispatchers.IO){
+        dao.delete(task.toEntity())
+    }
 }
