@@ -22,7 +22,6 @@ class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapte
         fun bind(item : TaskDomain){
             binding.tvTitle.text = item.title
             binding.tvDescription.text = item.description
-
         }
     }
 
