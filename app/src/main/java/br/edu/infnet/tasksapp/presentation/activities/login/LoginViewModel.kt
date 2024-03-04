@@ -22,7 +22,6 @@ class LoginViewModel(application : Application) : AndroidViewModel(application) 
             firebaseAPI.login(user)
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
-                        //firebaseAPI.updateReferences()
                         successLogin.complete(true)
                     } else {
                         successLogin.complete(false)
