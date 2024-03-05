@@ -11,13 +11,8 @@ class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapte
 
     var onItemClick : ((TaskDomain) -> Unit)? = null
 
-    class ViewHolder(private val binding : ItemTaskBinding, onItemClick: ((TaskDomain) -> Unit)?, taskList : List<TaskDomain>) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding : ItemTaskBinding) : RecyclerView.ViewHolder(binding.root){
 
-        init {
-            binding.tvTitle.setOnClickListener {
-                onItemClick?.invoke(taskList[adapterPosition])
-            }
-        }
 
         fun bind(item : TaskDomain){
             binding.tvTitle.text = item.title
@@ -31,9 +26,7 @@ class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapte
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            onItemClick,
-            taskList
+            )
         )
     }
 
@@ -44,9 +37,9 @@ class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val task = taskList[position]
         holder.bind(task)
-        /*holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener{
             onItemClick?.invoke(task)
-        }*/
+        }
     }
 
     fun updateList(newList: List<TaskDomain>){
