@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val adapter by lazy { TaskAdapter(emptyList()) }
-    val dialogEditTextActivity = DialogEditTextActivity(this)
+    private val dialogEditTextActivity = DialogEditTextActivity(this)
 
     private val editTaskContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.registerToolbar.setTitle(getString(R.string.tasks))
+        binding.registerToolbar.title = getString(R.string.tasks)
         binding.registerToolbar.setTitleTextColor(Color.WHITE)
 
        setSupportActionBar(binding.registerToolbar)
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item!!.itemId){
+        when(item.itemId){
             R.id.main_activity_menu_logoff -> {
                 lifecycleScope.launch {
                     viewModel.logoff()

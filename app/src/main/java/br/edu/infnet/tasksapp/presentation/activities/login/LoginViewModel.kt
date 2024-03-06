@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.api.FirebaseAPI
+import br.edu.infnet.tasksapp.data.DataStoreManager
 import br.edu.infnet.tasksapp.domain.model.User
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import kotlinx.coroutines.*
@@ -14,6 +15,7 @@ import kotlinx.coroutines.*
 class LoginViewModel(application : Application) : AndroidViewModel(application) {
 
     private val firebaseAPI = FirebaseAPI.instance
+    val dataStore = DataStoreManager(application)
 
     suspend fun login(email: String, password: String)=
         viewModelScope.async(Dispatchers.IO){
@@ -36,15 +38,21 @@ class LoginViewModel(application : Application) : AndroidViewModel(application) 
             if(successLogin.await()){
                 val currentUser = firebaseAPI.currentUser()
                 if(currentUser?.isEmailVerified == true){
-                    onUserLogged()
+                    onUserLogged(currentUser.uid)
                 }else{
                     onUserNotVerified()
                 }
             }
     }
 
-    var onUserLogged: () -> Unit = {}
+    var onUserLogged: (String) -> Unit = {}
     var onUserNotVerified : () -> Unit = {}
     var onError: (String) -> Unit = {}
+
+    fun setUserId(userId : String){
+        viewModelScope.launch {
+            dataStore.setUserId(userId)
+        }
+    }
 
 }

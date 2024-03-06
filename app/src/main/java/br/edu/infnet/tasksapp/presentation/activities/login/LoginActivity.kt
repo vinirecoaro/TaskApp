@@ -46,7 +46,8 @@ class LoginActivity : AppCompatActivity() {
         binding.tvRedifinePassword.setOnClickListener {
             startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
-        viewModel.onUserLogged = {
+        viewModel.onUserLogged = {userId ->
+            viewModel.setUserId(userId)
             startActivity(Intent(this, MainActivity::class.java))
         }
         viewModel.onUserNotVerified = {
