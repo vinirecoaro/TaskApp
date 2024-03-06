@@ -7,10 +7,12 @@ typealias TaskDomain = Task
 data class Task(
     val id : Int = 0,
     val title : String,
-    val description : String
+    val description : String,
+    val userId : String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
     ) {
@@ -20,6 +22,7 @@ data class Task(
         parcel.writeInt(id)
         parcel.writeString(title)
         parcel.writeString(description)
+        parcel.writeString(userId)
     }
 
     override fun describeContents(): Int {

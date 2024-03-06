@@ -17,11 +17,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
+import br.edu.infnet.tasksapp.data.DataStoreManager
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -33,10 +37,11 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val adapter by lazy { TaskAdapter(emptyList()) }
     private val dialogEditTextActivity = DialogEditTextActivity(this)
+    lateinit var userId : String
 
     private val editTaskContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.getAllTasks()
+            viewModel.getAllTasks(userId)
             val data: Intent? = result.data
             val toastMessage = data?.getStringExtra(getString(R.string.edit_intent))
             if (!toastMessage.isNullOrEmpty()) {
@@ -59,9 +64,12 @@ class MainActivity : AppCompatActivity() {
        setSupportActionBar(binding.registerToolbar)
 
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
+
+        getUserId()
         setupAdapter()
         setupListener()
         observeStates()
+
     }
 
     private fun setupListener(){
@@ -112,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             topicTitle2 = getString(R.string.subtitle_new_task_description),
             placeHolder2 = getString(R.string.label_new_task_description)
         ){results ->
-            viewModel.insert(results.first, results.second)
+            viewModel.insert(results.first, results.second, userId)
         }
     }
 
@@ -132,6 +140,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getUserId(){
+        viewModel.getUserId().observe(this){id ->
+            userId = id
+            viewModel.getAllTasks(userId)
+        }
     }
 
     fun<T> Flow<T>.observe(owner : LifecycleOwner, observe : (T) -> Unit){

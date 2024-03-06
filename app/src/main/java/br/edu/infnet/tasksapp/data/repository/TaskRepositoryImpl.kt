@@ -15,8 +15,8 @@ class TaskRepositoryImpl(private val dao : TaskDao) : TaskRepository {
         dao.insert(task.toEntity())
     }
 
-    override suspend fun getAll(): Flow<List<TaskDomain>> = withContext(Dispatchers.IO) {
-        dao.getAll().map { list ->
+    override suspend fun getAll(userId : String): Flow<List<TaskDomain>> = withContext(Dispatchers.IO) {
+        dao.getAll(userId).map { list ->
             list.map { it.toDomain() }
         }
     }

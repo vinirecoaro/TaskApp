@@ -9,10 +9,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityEditTaskBinding
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityViewModel
+import kotlinx.coroutines.launch
 
 class EditTaskActivity : AppCompatActivity() {
 
@@ -44,12 +46,13 @@ class EditTaskActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val task = intent.getParcelableExtra<TaskDomain>(getString(R.string.task_intent))
-        when(item!!.itemId){
+        when(item.itemId){
             R.id.save_edit_task_menu -> {
                 viewModel.update(
                     task!!.id,
                     binding.etTitleEditTask.text.toString(),
-                    binding.etDescriptionEditTask.text.toString()
+                    binding.etDescriptionEditTask.text.toString(),
+                    task.userId
                 )
                 val resultIntent = Intent().apply {
                     putExtra(getString(R.string.edit_intent), getString(R.string.edit_intent))
@@ -86,7 +89,8 @@ class EditTaskActivity : AppCompatActivity() {
                 viewModel.delete(
                     task.id,
                     binding.etTitleEditTask.text.toString(),
-                    binding.etDescriptionEditTask.text.toString()
+                    binding.etDescriptionEditTask.text.toString(),
+                    task.userId
                 )
                 val resultIntent = Intent().apply {
                     putExtra(getString(R.string.edit_intent), getString(R.string.delete_intent))
@@ -101,5 +105,6 @@ class EditTaskActivity : AppCompatActivity() {
 
         alertDialog.show()
     }
+
 
 }

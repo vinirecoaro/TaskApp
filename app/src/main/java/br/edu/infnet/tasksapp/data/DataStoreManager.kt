@@ -13,12 +13,21 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 
 
-class DataStoreManager(context: Context) {
+class DataStoreManager private constructor(context: Context) {
     private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name="USER_INFO")
     private val dataStore = context.dataStore
 
     companion object {
         val userIdKey = stringPreferencesKey("USER_ID")
+
+        @Volatile
+        private var instance: DataStoreManager? = null
+
+        fun getInstance(context: Context): DataStoreManager {
+            return instance ?: synchronized(this) {
+                instance ?: DataStoreManager(context).also { instance = it }
+            }
+        }
     }
 
     suspend fun setUserId(userId : String){
@@ -27,7 +36,7 @@ class DataStoreManager(context: Context) {
         }
     }
 
-    suspend fun getUserId() : Flow<String> {
+     fun getUserId() : Flow<String> {
         return dataStore.data
             .catch {
                 exception ->

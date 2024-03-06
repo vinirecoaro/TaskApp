@@ -14,8 +14,8 @@ interface TaskDao {
     @Insert
     fun insert(task : TaskEntity)
 
-    @Query("SELECT * FROM tasks")
-    fun getAll() : Flow<List<TaskEntity>>
+    @Query("SELECT * FROM tasks WHERE userId LIKE :userId")
+    fun getAll(userId : String) : Flow<List<TaskEntity>>
 
     @Update
     fun update(task : TaskEntity)

@@ -14,12 +14,15 @@ import br.edu.infnet.tasksapp.data.repository.TaskRepositoryImpl
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.domain.usecase.GetAllTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
-import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
@@ -33,13 +36,10 @@ class MainActivityViewModel(
     private val _state = MutableSharedFlow<MainActivityState>()
     val state : SharedFlow<MainActivityState> = _state
     private val firebaseAPI = FirebaseAPI.instance
+    private val dataStoreManager = DataStoreManager.getInstance(application)
 
-    init {
-        getAllTasks()
-    }
-
-     fun getAllTasks() = viewModelScope.launch {
-        getAllTasksUseCase()
+     fun getAllTasks(userId : String) = viewModelScope.launch {
+        getAllTasksUseCase(userId)
             .flowOn(Dispatchers.Main)
             .onStart {
                 _state.emit(MainActivityState.Loading)
@@ -55,10 +55,11 @@ class MainActivityViewModel(
             }
     }
 
-    fun insert(title : String, description : String) = viewModelScope.launch{
+    fun insert(title : String, description : String, userId : String) = viewModelScope.launch{
         insertTasksUseCase(TaskDomain(
             title = title,
-            description = description
+            description = description,
+            userId = userId
         ))
     }
 
@@ -68,7 +69,11 @@ class MainActivityViewModel(
         }
     }
 
-    class Factory : ViewModelProvider.Factory{
+    fun getUserId() : Flow<String> {
+        return dataStoreManager.getUserId()
+    }
+
+    class Factory: ViewModelProvider.Factory{
         override fun <T : ViewModel> create(
             modelClass: Class<T>,
             extras : CreationExtras

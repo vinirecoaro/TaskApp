@@ -15,7 +15,7 @@ import kotlinx.coroutines.*
 class LoginViewModel(application : Application) : AndroidViewModel(application) {
 
     private val firebaseAPI = FirebaseAPI.instance
-    val dataStore = DataStoreManager(application)
+    private val dataStore = DataStoreManager.getInstance(application)
 
     suspend fun login(email: String, password: String)=
         viewModelScope.async(Dispatchers.IO){

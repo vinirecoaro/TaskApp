@@ -6,11 +6,13 @@ import br.edu.infnet.tasksapp.domain.model.TaskDomain
 fun TaskDomain.toEntity() = TaskEntity(
     id = id,
     title = title,
-    description = description
+    description = description,
+    userId = userId
 )
 
 fun TaskEntity.toDomain() = TaskDomain(
     id = id,
     title = title,
-    description = description
+    description = description,
+    userId = userId
 )
