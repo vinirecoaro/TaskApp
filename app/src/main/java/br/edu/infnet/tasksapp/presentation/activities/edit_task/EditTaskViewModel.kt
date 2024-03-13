@@ -1,6 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.activities.edit_task
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,12 +20,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class EditTaskViewModel(
-    application : Application,
+    context : Context,
     private val updateTasksUseCase: UpdateTasksUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
-    private val dataStoreManager = DataStoreManager.getInstance(application)
+    private val dataStoreManager = DataStoreManager.getInstance(context)
 
     fun update(id : Int, title : String, description : String, userId : String) = viewModelScope.launch {
         updateTasksUseCase(TaskDomain(

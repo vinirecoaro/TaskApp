@@ -59,11 +59,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        startKoin {
-            androidContext(this@MainActivity)
-            modules(appModule)
-        }
-
         binding.registerToolbar.title = getString(R.string.tasks)
         binding.registerToolbar.setTitleTextColor(Color.WHITE)
 
