@@ -21,6 +21,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.data.DataStoreManager
+import br.edu.infnet.tasksapp.di.appModule
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
@@ -28,17 +29,17 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel : MainActivityViewModel by viewModels{
-        MainActivityViewModel.Factory()
-    }
+    private val viewModel : MainActivityViewModel by inject()
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val adapter by lazy { TaskAdapter(emptyList()) }
     private val dialogEditTextActivity = DialogEditTextActivity(this)
     lateinit var userId : String
-
     private val editTaskContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.getAllTasks(userId)
@@ -57,6 +58,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        startKoin {
+            androidContext(this@MainActivity)
+            modules(appModule)
+        }
 
         binding.registerToolbar.title = getString(R.string.tasks)
         binding.registerToolbar.setTitleTextColor(Color.WHITE)

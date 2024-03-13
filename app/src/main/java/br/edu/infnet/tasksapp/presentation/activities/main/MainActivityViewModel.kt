@@ -1,6 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.activities.main
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -28,15 +29,15 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 
 class MainActivityViewModel(
-    application : Application,
+    context : Context,
     private val getAllTasksUseCase : GetAllTasksUseCase,
     private val insertTasksUseCase: InsertTasksUseCase,
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val _state = MutableSharedFlow<MainActivityState>()
     val state : SharedFlow<MainActivityState> = _state
     private val firebaseAPI = FirebaseAPI.instance
-    private val dataStoreManager = DataStoreManager.getInstance(application)
+    private val dataStoreManager = DataStoreManager.getInstance(context)
 
      fun getAllTasks(userId : String) = viewModelScope.launch {
         getAllTasksUseCase(userId)
@@ -73,7 +74,7 @@ class MainActivityViewModel(
         return dataStoreManager.getUserId()
     }
 
-    class Factory: ViewModelProvider.Factory{
+/*    class Factory: ViewModelProvider.Factory{
         override fun <T : ViewModel> create(
             modelClass: Class<T>,
             extras : CreationExtras
@@ -86,5 +87,5 @@ class MainActivityViewModel(
                 insertTasksUseCase = InsertTasksUseCase(repository)
             ) as T
         }
-    }
+    }*/
 }
