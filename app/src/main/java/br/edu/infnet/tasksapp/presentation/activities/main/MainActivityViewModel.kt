@@ -64,18 +64,4 @@ class MainActivityViewModel(
         return dataStoreManager.getUserId()
     }
 
-/*    class Factory: ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(
-            modelClass: Class<T>,
-            extras : CreationExtras
-        ): T {
-            val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
-            val repository = TaskRepositoryImpl(application.db.taskDao())
-            return MainActivityViewModel(
-                application,
-                getAllTasksUseCase = GetAllTasksUseCase(repository),
-                insertTasksUseCase = InsertTasksUseCase(repository)
-            ) as T
-        }
-    }*/
 }
