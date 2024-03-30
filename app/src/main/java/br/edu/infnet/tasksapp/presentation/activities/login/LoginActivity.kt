@@ -13,6 +13,7 @@ import br.edu.infnet.tasksapp.presentation.activities.main.MainActivity
 import br.edu.infnet.tasksapp.presentation.activities.register.RegisterActivity
 import br.edu.infnet.tasksapp.presentation.activities.reset_password.ResetPasswordActivity
 import br.edu.infnet.tasksapp.presentation.activities.verify_email.VerifyEmailActivity
+import br.edu.infnet.tasksapp.presentation.fragments.Button
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val fragment = Button.newInstance("Login")
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frag_button, fragment)
+            .commit()
 
         resetPasswordSucess()
         setupListeners()
