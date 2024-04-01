@@ -5,10 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.FragmentButtonBinding
 
-class Button : Fragment() {
+class ButtonFragment : Fragment() {
     private var _binding : FragmentButtonBinding? = null
     private val binding get() = _binding!!
     var listener: OnButtonClickListener? = null

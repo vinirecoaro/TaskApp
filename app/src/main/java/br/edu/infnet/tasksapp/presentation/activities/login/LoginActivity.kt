@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import br.edu.infnet.tasksapp.R
@@ -15,7 +14,7 @@ import br.edu.infnet.tasksapp.presentation.activities.main.MainActivity
 import br.edu.infnet.tasksapp.presentation.activities.register.RegisterActivity
 import br.edu.infnet.tasksapp.presentation.activities.reset_password.ResetPasswordActivity
 import br.edu.infnet.tasksapp.presentation.activities.verify_email.VerifyEmailActivity
-import br.edu.infnet.tasksapp.presentation.fragments.button.Button
+import br.edu.infnet.tasksapp.presentation.fragments.button.ButtonFragment
 import br.edu.infnet.tasksapp.presentation.fragments.button.OnButtonClickListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +32,7 @@ class LoginActivity : AppCompatActivity(), OnButtonClickListener {
         if (savedInstanceState == null) {
 
             val bundle = bundleOf("button_text" to "Login")
-            val fragment = Button()
+            val fragment = ButtonFragment()
             fragment.arguments = bundle
 
             supportFragmentManager.commit {
