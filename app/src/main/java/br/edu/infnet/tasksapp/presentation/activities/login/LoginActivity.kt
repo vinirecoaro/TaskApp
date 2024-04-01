@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
+import androidx.core.os.bundleOf
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityLoginBinding
@@ -13,12 +15,13 @@ import br.edu.infnet.tasksapp.presentation.activities.main.MainActivity
 import br.edu.infnet.tasksapp.presentation.activities.register.RegisterActivity
 import br.edu.infnet.tasksapp.presentation.activities.reset_password.ResetPasswordActivity
 import br.edu.infnet.tasksapp.presentation.activities.verify_email.VerifyEmailActivity
-import br.edu.infnet.tasksapp.presentation.fragments.Button
+import br.edu.infnet.tasksapp.presentation.fragments.button.Button
+import br.edu.infnet.tasksapp.presentation.fragments.button.OnButtonClickListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), OnButtonClickListener {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<LoginViewModel>()
@@ -27,17 +30,20 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val fragment = Button.newInstance("Login")
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frag_button, fragment)
-            .commit()
+        if (savedInstanceState == null) {
+            val bundle = bundleOf("button_text" to "Login")
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<Button>(R.id.frag_button, args = bundle)
+            }
+        }
 
         resetPasswordSucess()
         setupListeners()
     }
 
     private fun setupListeners(){
-        binding.btLogin.setOnClickListener {
+/*        binding.btLogin.setOnClickListener {
             binding.btLogin.isEnabled = false
             lifecycleScope.launch (Dispatchers.Main){
                 viewModel.login(
@@ -45,7 +51,8 @@ class LoginActivity : AppCompatActivity() {
                     binding.etPassword.text.toString())
             }
             binding.btLogin.isEnabled = true
-        }
+        }*/
+
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -68,6 +75,14 @@ class LoginActivity : AppCompatActivity() {
         val result = intent.getBooleanExtra(getString(R.string.email_sent),false)
         if(result){
             Toast.makeText(this,getString(R.string.redefine_password_success_message), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onButtonClicked() {
+        lifecycleScope.launch (Dispatchers.Main){
+            viewModel.login(
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString())
         }
     }
 
