@@ -31,11 +31,18 @@ class LoginActivity : AppCompatActivity(), OnButtonClickListener {
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
+
             val bundle = bundleOf("button_text" to "Login")
+            val fragment = Button()
+            fragment.arguments = bundle
+
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<Button>(R.id.frag_button, args = bundle)
+                add(R.id.frag_button, fragment)
             }
+
+            fragment.listener = this
+
         }
 
         resetPasswordSucess()
@@ -43,15 +50,6 @@ class LoginActivity : AppCompatActivity(), OnButtonClickListener {
     }
 
     private fun setupListeners(){
-/*        binding.btLogin.setOnClickListener {
-            binding.btLogin.isEnabled = false
-            lifecycleScope.launch (Dispatchers.Main){
-                viewModel.login(
-                    binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString())
-            }
-            binding.btLogin.isEnabled = true
-        }*/
 
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -79,6 +77,7 @@ class LoginActivity : AppCompatActivity(), OnButtonClickListener {
     }
 
     override fun onButtonClicked() {
+        println("Interface is working")
         lifecycleScope.launch (Dispatchers.Main){
             viewModel.login(
                 binding.etEmail.text.toString(),
