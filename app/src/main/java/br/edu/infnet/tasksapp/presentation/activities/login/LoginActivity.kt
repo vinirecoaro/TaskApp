@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity(), OnButtonClickListener {
 
         if (savedInstanceState == null) {
 
-            val bundle = bundleOf("button_text" to "Login")
+            val bundle = bundleOf(getString(R.string.button_text_key) to "Login")
             val fragment = ButtonFragment()
             fragment.arguments = bundle
 

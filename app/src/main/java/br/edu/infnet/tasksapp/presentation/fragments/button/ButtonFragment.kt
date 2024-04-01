@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.FragmentButtonBinding
 
 class ButtonFragment : Fragment() {
@@ -24,7 +25,7 @@ class ButtonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val buttonText = requireArguments().getString("button_text")
+        val buttonText = requireArguments().getString(getString(R.string.button_text_key))
         binding.btButtonFragment.text = buttonText
 
         binding.btButtonFragment.setOnClickListener {

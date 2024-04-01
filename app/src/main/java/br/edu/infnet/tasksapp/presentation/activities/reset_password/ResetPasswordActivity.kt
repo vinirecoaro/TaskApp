@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityResetPasswordBinding
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
+import br.edu.infnet.tasksapp.presentation.fragments.button.ButtonFragment
+import br.edu.infnet.tasksapp.presentation.fragments.button.OnButtonClickListener
 import com.google.android.material.snackbar.Snackbar
 
-class ResetPasswordActivity : AppCompatActivity() {
+class ResetPasswordActivity : AppCompatActivity(), OnButtonClickListener {
 
     private val binding by lazy { ActivityResetPasswordBinding.inflate(layoutInflater)}
     private val viewModel by viewModels<ResetPasswordViewModel>()
@@ -27,17 +31,20 @@ class ResetPasswordActivity : AppCompatActivity() {
         setSupportActionBar(binding.resetPasswordToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val bundle = bundleOf(getString(R.string.button_text_key) to "Enviar")
+        val fragment = ButtonFragment()
+        fragment.arguments = bundle
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add(R.id.frag_button_send, fragment)
+        }
+        fragment.listener = this
+
         setUpListeners()
 
     }
 
     private fun setUpListeners(){
-        binding.btSend.setOnClickListener {
-            if(verifyFields(binding.etEmail)){
-                viewModel.resetPassword(binding.etEmail.text.toString())
-            }
-        }
-
         viewModel.onResetPasswordSuccess = {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra(getString(R.string.email_sent), true)
@@ -61,6 +68,12 @@ class ResetPasswordActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onButtonClicked() {
+        if(verifyFields(binding.etEmail)){
+            viewModel.resetPassword(binding.etEmail.text.toString())
+        }
     }
 
 }
