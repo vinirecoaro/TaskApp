@@ -48,6 +48,7 @@
     <string name="weak_password">Senha Fraca</string>
     <string name="mid_password">Senha Média</string>
     <string name="strong_password">Senha Forte</string>
+    <string name="invalid_email">E-mail Inválido</string>
 
 
 </resources>

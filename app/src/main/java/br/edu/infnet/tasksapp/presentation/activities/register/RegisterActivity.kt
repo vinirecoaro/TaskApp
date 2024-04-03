@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityRegisterBinding
 import br.edu.infnet.tasksapp.presentation.activities.verify_email.VerifyEmailActivity
+import br.edu.infnet.tasksapp.presentation.fragments.email_edit_text.EmailEditTextFragment
 import br.edu.infnet.tasksapp.presentation.fragments.password_edit_text.PasswordEditTextFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -35,10 +36,16 @@ class RegisterActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
 
-            val fragment = PasswordEditTextFragment()
+            val passwordFragment = PasswordEditTextFragment()
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.frag_et_password_register, fragment)
+                add(R.id.frag_et_password_register, passwordFragment)
+            }
+
+            val emailFragment = EmailEditTextFragment()
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.frag_et_email_register, emailFragment)
             }
 
         }
