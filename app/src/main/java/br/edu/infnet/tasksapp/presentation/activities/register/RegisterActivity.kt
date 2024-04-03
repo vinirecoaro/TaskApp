@@ -6,6 +6,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +23,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityRegisterBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<RegisterViewModel>()
+    private val passwordFragment = PasswordEditTextFragment()
+    private val emailFragment = EmailEditTextFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +39,9 @@ class RegisterActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
 
-            val passwordFragment = PasswordEditTextFragment()
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add(R.id.frag_et_password_register, passwordFragment)
-            }
-
-            val emailFragment = EmailEditTextFragment()
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
                 add(R.id.frag_et_email_register, emailFragment)
             }
 
@@ -60,12 +57,20 @@ class RegisterActivity : AppCompatActivity() {
         }
         binding.btRegister.setOnClickListener{
             binding.btRegister.isEnabled = false
-            if(verifyFields(binding.etEmail, binding.etPassword)){
+            val passwordEtFrag = passwordFragment.requireView().findViewById<EditText>(R.id.et_password_frag)
+            val passwordTvFrag = passwordFragment.requireView().findViewById<TextView>(R.id.tv_password_strength).text.toString()
+            val emailEtFrag = emailFragment.requireView().findViewById<EditText>(R.id.et_email_frag)
+            val emailTvFrag = emailFragment.requireView().findViewById<TextView>(R.id.tv_email_validity).text.toString()
+            if(
+                verifyFields(binding.etName, emailEtFrag, passwordEtFrag) &&
+                (passwordTvFrag == getString(R.string.mid_password) || passwordTvFrag == getString(R.string.strong_password)) &&
+                emailTvFrag == getString(R.string.valid_email)
+                ){
                 lifecycleScope.launch(Dispatchers.Main) {
                     viewModel.createUser(
                         binding.etName.text.toString(),
-                        binding.etEmail.text.toString(),
-                        binding.etPassword.text.toString())
+                        emailEtFrag.text.toString(),
+                        passwordEtFrag.text.toString())
                 }
             }
             binding.btRegister.isEnabled = true

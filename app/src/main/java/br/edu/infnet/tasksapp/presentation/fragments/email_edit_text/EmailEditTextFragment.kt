@@ -44,6 +44,7 @@ class EmailEditTextFragment : Fragment() {
                         binding.tvEmailValidity.text = getString(R.string.invalid_email)
                         binding.tvEmailValidity.visibility = View.VISIBLE
                     }else{
+                        binding.tvEmailValidity.text = getString(R.string.valid_email)
                         binding.tvEmailValidity.visibility = View.GONE
                     }
                 }
