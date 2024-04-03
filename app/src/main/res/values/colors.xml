@@ -12,4 +12,7 @@
     <color name="blue_500">#002E3C</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="yellow">#FF9800</color>
+    <color name="holo_green_dark">#FF669900</color>
+    <color name="holo_red_dark">#FFCC0000</color>
 </resources>

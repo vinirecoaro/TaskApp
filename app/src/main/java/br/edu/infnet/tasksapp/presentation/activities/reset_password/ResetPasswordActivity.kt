@@ -31,14 +31,18 @@ class ResetPasswordActivity : AppCompatActivity(), OnButtonClickListener {
         setSupportActionBar(binding.resetPasswordToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val bundle = bundleOf(getString(R.string.button_text_key) to "Enviar")
-        val fragment = ButtonFragment()
-        fragment.arguments = bundle
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.frag_button_send, fragment)
+        if (savedInstanceState == null) {
+
+            val bundle = bundleOf(getString(R.string.button_text_key) to "Enviar")
+            val fragment = ButtonFragment()
+            fragment.arguments = bundle
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.frag_button_send, fragment)
+            }
+            fragment.listener = this
+
         }
-        fragment.listener = this
 
         setUpListeners()
 

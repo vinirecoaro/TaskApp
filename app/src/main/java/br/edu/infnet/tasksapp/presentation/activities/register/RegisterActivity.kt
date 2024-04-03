@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityRegisterBinding
 import br.edu.infnet.tasksapp.presentation.activities.verify_email.VerifyEmailActivity
+import br.edu.infnet.tasksapp.presentation.fragments.password_edit_text.PasswordEditTextFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +32,16 @@ class RegisterActivity : AppCompatActivity() {
         //Insert a back button on Navigation bar
         setSupportActionBar(binding.registerToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if (savedInstanceState == null) {
+
+            val fragment = PasswordEditTextFragment()
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.frag_et_password_register, fragment)
+            }
+
+        }
 
         setupListeners()
         setColorBasedOnTheme()
