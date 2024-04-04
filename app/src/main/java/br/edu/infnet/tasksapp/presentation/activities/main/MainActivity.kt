@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +26,7 @@ import br.edu.infnet.tasksapp.di.appModule
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
+import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewFragment
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
@@ -39,10 +41,11 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val adapter by lazy { TaskAdapter(emptyList()) }
     private val dialogEditTextActivity = DialogEditTextActivity(this)
+    private val fragmentTaskList = TaskListRecyclerViewFragment()
     lateinit var userId : String
     private val editTaskContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.getAllTasks(userId)
+            //viewModel.getAllTasks(userId)
             val data: Intent? = result.data
             val toastMessage = data?.getStringExtra(getString(R.string.edit_intent))
             if (!toastMessage.isNullOrEmpty()) {
@@ -65,6 +68,13 @@ class MainActivity : AppCompatActivity() {
        setSupportActionBar(binding.registerToolbar)
 
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
+
+        if(savedInstanceState == null){
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.frag_rv_task_list_main, fragmentTaskList)
+            }
+        }
 
         getUserId()
         setupAdapter()
@@ -146,7 +156,7 @@ class MainActivity : AppCompatActivity() {
     private fun getUserId(){
         viewModel.getUserId().observe(this){id ->
             userId = id
-            viewModel.getAllTasks(userId)
+            //viewModel.getAllTasks(userId)
         }
     }
 

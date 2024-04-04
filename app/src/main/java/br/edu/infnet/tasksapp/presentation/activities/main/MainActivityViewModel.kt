@@ -29,7 +29,7 @@ class MainActivityViewModel(
     private val firebaseAPI = FirebaseAPI.instance
     private val dataStoreManager = DataStoreManager.getInstance(context)
 
-     fun getAllTasks(userId : String) = viewModelScope.launch {
+     /*fun getAllTasks(userId : String) = viewModelScope.launch {
         getAllTasksUseCase(userId)
             .flowOn(Dispatchers.Main)
             .onStart {
@@ -44,7 +44,7 @@ class MainActivityViewModel(
                     _state.emit(MainActivityState.Success(tasks))
                 }
             }
-    }
+    }*/
 
     fun insert(title : String, description : String, userId : String) = viewModelScope.launch{
         insertTasksUseCase(TaskDomain(

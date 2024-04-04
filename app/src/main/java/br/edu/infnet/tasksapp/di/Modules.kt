@@ -10,6 +10,7 @@ import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskViewModel
 import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityViewModel
+import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -58,6 +59,13 @@ val appModule = module {
             androidContext(),
             updateTasksUseCase = get<UpdateTasksUseCase>(),
             deleteTaskUseCase = get<DeleteTaskUseCase>()
+        )
+    }
+
+    viewModel<TaskListRecyclerViewViewModel>{
+        TaskListRecyclerViewViewModel(
+            androidContext(),
+            getAllTasksUseCase = get<GetAllTasksUseCase>(),
         )
     }
 }
