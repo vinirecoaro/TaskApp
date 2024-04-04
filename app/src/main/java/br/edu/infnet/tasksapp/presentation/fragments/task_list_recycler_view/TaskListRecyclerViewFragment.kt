@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.FragmentTaskListRecyclerViewBinding
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
@@ -52,6 +53,8 @@ class TaskListRecyclerViewFragment : Fragment() {
     ): View? {
         _binding = FragmentTaskListRecyclerViewBinding.inflate(inflater, container, false)
         val rootView = binding.root
+
+        binding.rvFragTaskList.layoutManager = LinearLayoutManager(requireContext())
 
         getUserId()
         setupAdapter()

@@ -39,24 +39,9 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel : MainActivityViewModel by inject()
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
-    private val adapter by lazy { TaskAdapter(emptyList()) }
     private val dialogEditTextActivity = DialogEditTextActivity(this)
     private val fragmentTaskList = TaskListRecyclerViewFragment()
     lateinit var userId : String
-    private val editTaskContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            //viewModel.getAllTasks(userId)
-            val data: Intent? = result.data
-            val toastMessage = data?.getStringExtra(getString(R.string.edit_intent))
-            if (!toastMessage.isNullOrEmpty()) {
-                if(toastMessage == getString(R.string.edit_intent)){
-                    Toast.makeText(this@MainActivity, getString(R.string.edit_task_success_message), Toast.LENGTH_SHORT).show()
-                }else if(toastMessage == getString(R.string.delete_intent)){
-                    Toast.makeText(this@MainActivity, getString(R.string.delete_task_success_message), Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,60 +52,20 @@ class MainActivity : AppCompatActivity() {
 
        setSupportActionBar(binding.registerToolbar)
 
-        binding.rvTasks.layoutManager = LinearLayoutManager(this)
-
         if(savedInstanceState == null){
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add(R.id.frag_rv_task_list_main, fragmentTaskList)
             }
         }
-
         getUserId()
-        setupAdapter()
         setupListener()
-        observeStates()
-
     }
 
     private fun setupListener(){
         binding.fabAdd.setOnClickListener{
             showDialog()
         }
-        adapter.onItemClick = {
-            val intent = Intent(this,EditTaskActivity::class.java)
-            intent.putExtra(getString(R.string.task_intent), it)
-            editTaskContract.launch(intent)
-        }
-    }
-
-    private fun observeStates(){
-        viewModel.state.observe(this){state ->
-            when(state){
-                MainActivityState.Loading -> {
-                    binding.pbTasks.isVisible = true
-                }
-                MainActivityState.Empty -> {
-                    binding.pbTasks.isVisible = false
-                    Toast.makeText(this,getString(R.string.label_empty_tasks), Toast.LENGTH_LONG).show()
-                }
-                is MainActivityState.Error -> {
-                    binding.pbTasks.isVisible = false
-                    Toast.makeText(this,state.message, Toast.LENGTH_LONG).show()
-                }
-
-                is MainActivityState.Success -> {
-                    binding.pbTasks.isVisible = false
-                    val tasks = state.tasks
-                    adapter.updateList(tasks)
-                }
-            }
-
-        }
-    }
-
-    private fun setupAdapter(){
-        binding.rvTasks.adapter = adapter
     }
 
     private fun showDialog(){
@@ -156,7 +101,6 @@ class MainActivity : AppCompatActivity() {
     private fun getUserId(){
         viewModel.getUserId().observe(this){id ->
             userId = id
-            //viewModel.getAllTasks(userId)
         }
     }
 
