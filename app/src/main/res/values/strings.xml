@@ -50,6 +50,7 @@
     <string name="strong_password">Senha Forte</string>
     <string name="invalid_email">E-mail Inválido</string>
     <string name="valid_email">E-mail Valido</string>
+    <string name="type_valid_email">Digite um e-mail Valido</string>
 
 
 </resources>
