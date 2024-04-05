@@ -1,13 +1,16 @@
 package br.edu.infnet.tasksapp.presentation.activities.reset_password
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.api.FirebaseAPI
+import br.edu.infnet.tasksapp.data.DataStoreManager
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class ResetPasswordViewModel : ViewModel() {
+class ResetPasswordViewModel() : ViewModel() {
 
     private val firebaseAPI = FirebaseAPI.instance
 

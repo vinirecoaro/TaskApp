@@ -59,6 +59,7 @@ class LoginActivity : AppCompatActivity(), OnButtonClickListener {
         viewModel.onUserLogged = {userId ->
             viewModel.setUserId(userId)
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
         viewModel.onUserNotVerified = {
             startActivity(Intent(this, VerifyEmailActivity::class.java))

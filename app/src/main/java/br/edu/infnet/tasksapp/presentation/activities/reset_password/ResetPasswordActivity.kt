@@ -13,10 +13,12 @@ import androidx.fragment.app.commit
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityResetPasswordBinding
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
+import br.edu.infnet.tasksapp.presentation.activities.reset_internal_password.ResetInternalPasswordActivity
 import br.edu.infnet.tasksapp.presentation.fragments.button.ButtonFragment
 import br.edu.infnet.tasksapp.presentation.fragments.button.OnButtonClickListener
 import br.edu.infnet.tasksapp.presentation.fragments.email_edit_text.EmailEditTextFragment
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 class ResetPasswordActivity : AppCompatActivity(), OnButtonClickListener {
 
@@ -67,6 +69,9 @@ class ResetPasswordActivity : AppCompatActivity(), OnButtonClickListener {
 
         binding.resetPasswordToolbar.setNavigationOnClickListener {
             finish()
+        }
+        binding.tvResetInternalPassword.setOnClickListener {
+            startActivity(Intent(this,ResetInternalPasswordActivity::class.java))
         }
     }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -10,9 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".MyApp"
         android:theme="@style/Theme.TasksApp"
         tools:targetApi="31">
+        <activity
+            android:name=".presentation.activities.reset_internal_password.ResetInternalPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.activities.reset_password.ResetPasswordActivity"
             android:exported="false" />
@@ -36,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.activities.login.LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".presentation.activities.main.MainActivity"
             android:exported="true" />

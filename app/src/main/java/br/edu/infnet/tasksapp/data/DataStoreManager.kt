@@ -19,6 +19,7 @@ class DataStoreManager private constructor(context: Context) {
 
     companion object {
         val userIdKey = stringPreferencesKey("USER_ID")
+        val userInternalPassword = stringPreferencesKey("USER_INTERNAL_PASSWORD")
 
         @Volatile
         private var instance: DataStoreManager? = null
@@ -33,6 +34,12 @@ class DataStoreManager private constructor(context: Context) {
     suspend fun setUserId(userId : String){
         dataStore.edit { preferences ->
             preferences[userIdKey] = userId
+        }
+    }
+
+    suspend fun setUserInternalPassword(newUserInternalPassword: String){
+        dataStore.edit { preferences ->
+            preferences[userInternalPassword] = newUserInternalPassword
         }
     }
 

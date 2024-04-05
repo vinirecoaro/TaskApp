@@ -10,6 +10,9 @@ import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
 import br.edu.infnet.tasksapp.domain.usecase.UpdateTasksUseCase
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskViewModel
 import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityViewModel
+import br.edu.infnet.tasksapp.presentation.activities.reset_internal_password.ResetInternalPasswordActivity
+import br.edu.infnet.tasksapp.presentation.activities.reset_internal_password.ResetInternalPasswordViewModel
+import br.edu.infnet.tasksapp.presentation.activities.reset_password.ResetPasswordViewModel
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -66,6 +69,12 @@ val appModule = module {
         TaskListRecyclerViewViewModel(
             androidContext(),
             getAllTasksUseCase = get<GetAllTasksUseCase>(),
+        )
+    }
+
+    viewModel<ResetInternalPasswordViewModel>{
+        ResetInternalPasswordViewModel(
+            androidContext()
         )
     }
 }
