@@ -33,7 +33,8 @@ class TaskRepositoryImpl(private val dao : TaskDao, private val firebaseAPI : Fi
         dao.update(task.toEntity())
     }
 
-    override suspend fun delete(task: TaskDomain) = withContext(Dispatchers.IO){
+    override suspend fun delete(task: TaskDomain) : Unit = withContext(Dispatchers.IO){
         dao.delete(task.toEntity())
+        firebaseAPI.deleteTask(task)
     }
 }

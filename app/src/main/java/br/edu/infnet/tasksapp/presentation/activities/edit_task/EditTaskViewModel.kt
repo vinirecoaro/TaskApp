@@ -25,8 +25,6 @@ class EditTaskViewModel(
     private val deleteTaskUseCase: DeleteTaskUseCase
 ) : ViewModel() {
 
-    private val dataStoreManager = DataStoreManager.getInstance(context)
-
     fun update(id : Int, title : String, description : String, userId : String) = viewModelScope.launch {
         updateTasksUseCase(TaskDomain(
             id = id,
@@ -37,20 +35,14 @@ class EditTaskViewModel(
     }
 
     fun delete(id : Int, title : String, description : String, userId : String) = viewModelScope.launch {
-        deleteTaskUseCase(TaskDomain(
-            id = id,
-            title = title,
-            description = description,
-            userId = userId
-            ))
-    }
-
-    fun getUserId() : Deferred<String> {
-        val userId = CompletableDeferred<String>()
-        viewModelScope.launch {
-            userId.complete(dataStoreManager.getUserId().first())
-        }
-        return userId
+        deleteTaskUseCase(
+            TaskDomain(
+                id = id,
+                title = title,
+                description = description,
+                userId = userId
+            )
+        )
     }
 
 }

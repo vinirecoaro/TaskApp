@@ -62,6 +62,11 @@ class FirebaseAPI private constructor(){
             .updateChildren(mapTask)
     }
 
+    suspend fun deleteTask(task : TaskDomain) = withContext(Dispatchers.IO){
+        rootRef.child(auth.currentUser?.uid.toString())
+            .child(AppConstants.DATABASE.TASK_LIST).child(task.id.toString()).removeValue()
+    }
+
     suspend fun stateListener() = withContext(Dispatchers.IO){
         return@withContext auth.addAuthStateListener {  }
     }
