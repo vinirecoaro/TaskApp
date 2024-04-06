@@ -1,5 +1,6 @@
 package br.edu.infnet.tasksapp.data.repository
 
+import br.edu.infnet.tasksapp.api.FirebaseAPI
 import br.edu.infnet.tasksapp.data.dao.TaskDao
 import br.edu.infnet.tasksapp.data.mapper.toDomain
 import br.edu.infnet.tasksapp.data.mapper.toEntity
@@ -10,9 +11,16 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class TaskRepositoryImpl(private val dao : TaskDao) : TaskRepository {
-    override suspend fun insert(task: TaskDomain) = withContext(Dispatchers.IO){
-        dao.insert(task.toEntity())
+class TaskRepositoryImpl(private val dao : TaskDao, private val firebaseAPI : FirebaseAPI) : TaskRepository {
+    override suspend fun insert(task: TaskDomain): Unit = withContext(Dispatchers.IO){
+        val id = dao.insert(task.toEntity())
+        val taskToFirebase = TaskDomain(
+            id.toInt(),
+            task.title,
+            task.description,
+            task.userId
+        )
+        firebaseAPI.addTask(taskToFirebase)
     }
 
     override suspend fun getAll(userId : String): Flow<List<TaskDomain>> = withContext(Dispatchers.IO) {

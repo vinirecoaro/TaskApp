@@ -1,6 +1,7 @@
 package br.edu.infnet.tasksapp.di
 
 import androidx.room.Room
+import br.edu.infnet.tasksapp.api.FirebaseAPI
 import br.edu.infnet.tasksapp.data.AppDatabase
 import br.edu.infnet.tasksapp.data.dao.TaskDao
 import br.edu.infnet.tasksapp.data.repository.TaskRepositoryImpl
@@ -30,7 +31,10 @@ val appModule = module {
     }
 
     factory<TaskRepositoryImpl>{
-        TaskRepositoryImpl(get<TaskDao>())
+        TaskRepositoryImpl(
+            get<TaskDao>(),
+            FirebaseAPI.instance
+        )
     }
 
     factory<InsertTasksUseCase>{

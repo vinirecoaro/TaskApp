@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface TaskDao {
 
     @Insert
-    fun insert(task : TaskEntity)
+    fun insert(task : TaskEntity) : Long
 
     @Query("SELECT * FROM tasks WHERE userId LIKE :userId")
     fun getAll(userId : String) : Flow<List<TaskEntity>>

@@ -53,18 +53,4 @@ class EditTaskViewModel(
         return userId
     }
 
-    class Factory : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(
-            modelClass: Class<T>,
-            extras : CreationExtras
-        ): T {
-            val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
-            val repository = TaskRepositoryImpl(application.db.taskDao())
-            return EditTaskViewModel(
-                application,
-                updateTasksUseCase = UpdateTasksUseCase(repository),
-                deleteTaskUseCase = DeleteTaskUseCase(repository)
-            ) as T
-        }
-    }
 }

@@ -1,6 +1,8 @@
 package br.edu.infnet.tasksapp.api
 
+import androidx.core.os.bundleOf
 import br.edu.infnet.tasksapp.data.util.AppConstants
+import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.domain.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -47,6 +49,17 @@ class FirebaseAPI private constructor(){
             .child(AppConstants.DATABASE.USER_INFO)
             .child(AppConstants.DATABASE.NAME)
             .setValue(name)
+    }
+
+    suspend fun addTask(task : TaskDomain) = withContext(Dispatchers.IO) {
+        val mapTask = mapOf(
+            AppConstants.DATABASE.TASK_TITLE to task.title,
+            AppConstants.DATABASE.TASK_DESCRIPTION to task.description,
+        )
+        rootRef.child(auth.currentUser?.uid.toString())
+            .child(AppConstants.DATABASE.TASK_LIST)
+            .child(task.id.toString())
+            .updateChildren(mapTask)
     }
 
     suspend fun stateListener() = withContext(Dispatchers.IO){

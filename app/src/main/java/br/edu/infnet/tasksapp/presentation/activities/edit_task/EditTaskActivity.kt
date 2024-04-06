@@ -15,13 +15,12 @@ import br.edu.infnet.tasksapp.databinding.ActivityEditTaskBinding
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityViewModel
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class EditTaskActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityEditTaskBinding.inflate(layoutInflater) }
-    private val viewModel : EditTaskViewModel by viewModels{
-        EditTaskViewModel.Factory()
-    }
+    private val viewModel : EditTaskViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
