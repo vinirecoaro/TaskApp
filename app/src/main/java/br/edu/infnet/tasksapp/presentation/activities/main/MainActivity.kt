@@ -26,6 +26,7 @@ import br.edu.infnet.tasksapp.di.appModule
 import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
+import br.edu.infnet.tasksapp.presentation.activities.sorted_list.SortedListActivity
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewFragment
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
@@ -47,10 +48,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.registerToolbar.title = getString(R.string.tasks)
-        binding.registerToolbar.setTitleTextColor(Color.WHITE)
+        binding.mainToolbar.title = getString(R.string.tasks)
+        binding.mainToolbar.setTitleTextColor(Color.WHITE)
 
-       setSupportActionBar(binding.registerToolbar)
+       setSupportActionBar(binding.mainToolbar)
 
         if(savedInstanceState == null){
             supportFragmentManager.commit {
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.main_activity_menu_sorted_task_list -> {
-
+                startActivity(Intent(this,SortedListActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)

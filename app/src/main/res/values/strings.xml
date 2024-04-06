@@ -17,6 +17,7 @@
     <string name="verification_email_message">E-mail de validação da conta enviado.\nVerificar caixa de e-mail.</string>
     <string name="resent_email">Reeviar email</string>
     <string name="tasks">Tarefas</string>
+    <string name="sorted_task_list_title">Lista Ordenada</string>
     <string name="edit_task">Editar Tarefa</string>
     <string name="email_sent">Email Eviado</string>
     <string name="to_sent">Enviar</string>

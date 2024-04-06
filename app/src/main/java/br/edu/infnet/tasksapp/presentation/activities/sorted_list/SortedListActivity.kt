@@ -1,5 +1,6 @@
 package br.edu.infnet.tasksapp.presentation.activities.sorted_list
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.commit
@@ -16,12 +17,26 @@ class SortedListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.sortedListToolbar.title = getString(R.string.sorted_task_list_title)
+        binding.sortedListToolbar.setTitleTextColor(Color.WHITE)
+
+        setSupportActionBar(binding.sortedListToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         if(savedInstanceState == null){
             supportFragmentManager.commit{
                 setReorderingAllowed(true)
                 add(R.id.frag_rv_task_list_sorted, fragmentTaskList)
             }
         }
+        setupListeners()
 
     }
+
+    private fun setupListeners(){
+        binding.sortedListToolbar.setNavigationOnClickListener {
+            finish()
+        }
+    }
+
 }
