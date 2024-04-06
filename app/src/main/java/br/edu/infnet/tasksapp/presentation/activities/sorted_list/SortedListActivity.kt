@@ -3,6 +3,7 @@ package br.edu.infnet.tasksapp.presentation.activities.sorted_list
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivitySortedListBinding
@@ -24,6 +25,9 @@ class SortedListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if(savedInstanceState == null){
+            val bundle = bundleOf(getString(R.string.sorted_key) to true)
+            fragmentTaskList.arguments = bundle
+
             supportFragmentManager.commit{
                 setReorderingAllowed(true)
                 add(R.id.frag_rv_task_list_sorted, fragmentTaskList)

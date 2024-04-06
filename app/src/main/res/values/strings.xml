@@ -55,6 +55,7 @@
     <string name="redefine_internal_password">Redefinir senha interna</string>
     <string name="redefine_internal_password_title">Redefinir Senha Interna</string>
     <string name="redefine_internal_password_success_message">Senha interna redefinida com sucesso</string>
+    <string name="sorted_key">sorted_key</string>
 
 
     <string name="lorem_ipsum">

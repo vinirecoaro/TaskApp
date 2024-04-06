@@ -53,17 +53,19 @@ class TaskListRecyclerViewFragment : Fragment() {
         _binding = FragmentTaskListRecyclerViewBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
+        val sorted = requireArguments().getBoolean(getString(R.string.sorted_key))
+
         binding.rvFragTaskList.layoutManager = LinearLayoutManager(requireContext())
 
         getUserId()
         setupAdapter()
         setupListener()
-        observeStates()
+        observeStates(sorted)
 
         return rootView
     }
 
-    private fun observeStates(){
+    private fun observeStates(sorted : Boolean){
         viewModel.state.observe(this){state ->
             when(state){
                 TaskListFragmentState.Loading -> {
@@ -81,7 +83,11 @@ class TaskListRecyclerViewFragment : Fragment() {
                 is TaskListFragmentState.Success -> {
                     binding.pbFragTasks.isVisible = false
                     val tasks = state.tasks
-                    adapter.updateList(tasks)
+                    if(sorted){
+                        adapter.updateList(tasks.sortedBy { it.title })
+                    }else{
+                        adapter.updateList(tasks)
+                    }
                 }
             }
 

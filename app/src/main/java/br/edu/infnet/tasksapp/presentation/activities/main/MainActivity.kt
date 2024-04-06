@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
@@ -54,6 +55,9 @@ class MainActivity : AppCompatActivity() {
        setSupportActionBar(binding.mainToolbar)
 
         if(savedInstanceState == null){
+            val bundle = bundleOf(getString(R.string.sorted_key) to false)
+            fragmentTaskList.arguments = bundle
+
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add(R.id.frag_rv_task_list_main, fragmentTaskList)
