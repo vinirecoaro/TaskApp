@@ -94,6 +94,9 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             }
+            R.id.main_activity_menu_sorted_task_list -> {
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }

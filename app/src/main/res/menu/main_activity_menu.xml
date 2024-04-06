@@ -6,4 +6,8 @@
         android:title="@string/logoff"
         />
 
+    <item
+        android:id="@+id/main_activity_menu_sorted_task_list"
+        android:title="@string/sorted_list"/>
+
 </menu>
