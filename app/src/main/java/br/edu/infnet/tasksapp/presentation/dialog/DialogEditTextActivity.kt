@@ -2,6 +2,7 @@ package br.edu.infnet.tasksapp.presentation.dialog
 
 import android.app.Activity
 import android.app.AlertDialog
+import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityDialogEditTextBinding
 
 class DialogEditTextActivity(private val activity: Activity) {
@@ -21,12 +22,12 @@ class DialogEditTextActivity(private val activity: Activity) {
 
         val alertDialog = AlertDialog.Builder(activity)
             .setView(binding.root)
-            .setPositiveButton("Confirmar") { _, _ ->
+            .setPositiveButton(activity.getString(R.string.to_confirm)) { _, _ ->
                 val text1 = editText1.text.toString()
                 val text2 = editText2.text.toString()
                 onConfirm(Pair(text1, text2))
             }
-            .setNegativeButton("Cancelar") { dialog, _ ->
+            .setNegativeButton(activity.getString(R.string.to_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

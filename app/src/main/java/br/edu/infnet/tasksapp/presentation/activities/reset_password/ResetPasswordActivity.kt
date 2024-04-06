@@ -40,7 +40,7 @@ class ResetPasswordActivity : AppCompatActivity(), OnButtonClickListener {
 
         if (savedInstanceState == null) {
 
-            val bundle = bundleOf(getString(R.string.button_text_key) to "Enviar")
+            val bundle = bundleOf(getString(R.string.button_text_key) to getString(R.string.to_sent))
 
             buttonFragment.arguments = bundle
             supportFragmentManager.commit {
