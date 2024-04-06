@@ -24,27 +24,8 @@ class MainActivityViewModel(
     private val insertTasksUseCase: InsertTasksUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableSharedFlow<MainActivityState>()
-    val state : SharedFlow<MainActivityState> = _state
     private val firebaseAPI = FirebaseAPI.instance
     private val dataStoreManager = DataStoreManager.getInstance(context)
-
-     /*fun getAllTasks(userId : String) = viewModelScope.launch {
-        getAllTasksUseCase(userId)
-            .flowOn(Dispatchers.Main)
-            .onStart {
-                _state.emit(MainActivityState.Loading)
-            }.catch {
-                _state.emit(MainActivityState.Error("Erro"))
-            }.collect {tasks ->
-                if(tasks.isEmpty()){
-                    _state.emit(MainActivityState.Empty)
-                    _state.emit(MainActivityState.Success(emptyList()))
-                }else{
-                    _state.emit(MainActivityState.Success(tasks))
-                }
-            }
-    }*/
 
     fun insert(title : String, description : String, userId : String) = viewModelScope.launch{
         insertTasksUseCase(TaskDomain(

@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.data.DataStoreManager
 import br.edu.infnet.tasksapp.domain.usecase.GetAllTasksUseCase
-import br.edu.infnet.tasksapp.domain.usecase.InsertTasksUseCase
-import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

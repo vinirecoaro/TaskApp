@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.FragmentTaskListRecyclerViewBinding
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
-import br.edu.infnet.tasksapp.presentation.activities.main.MainActivityState
 import br.edu.infnet.tasksapp.presentation.activities.main.TaskAdapter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
