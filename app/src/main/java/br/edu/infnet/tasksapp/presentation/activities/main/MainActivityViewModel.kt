@@ -1,6 +1,7 @@
 package br.edu.infnet.tasksapp.presentation.activities.main
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.api.FirebaseAPI
@@ -43,6 +44,12 @@ class MainActivityViewModel(
 
     fun getUserId() : Flow<String> {
         return dataStoreManager.getUserId()
+    }
+
+    fun saveImage(uri : Uri?){
+        viewModelScope.launch {
+           firebaseAPI.saveImage(uri)
+        }
     }
 
 }

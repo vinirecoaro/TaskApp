@@ -1,6 +1,6 @@
 package br.edu.infnet.tasksapp.api
 
-import androidx.core.os.bundleOf
+import android.net.Uri
 import br.edu.infnet.tasksapp.data.util.AppConstants
 import br.edu.infnet.tasksapp.domain.model.TaskDomain
 import br.edu.infnet.tasksapp.domain.model.User
@@ -8,8 +8,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.SignInMethodQueryResult
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -19,13 +20,16 @@ class FirebaseAPI private constructor(){
         val INSTANCE = FirebaseAPI()
         val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val mStorage: FirebaseStorage = FirebaseStorage.getInstance()
     }
 
     companion object{
         val instance: FirebaseAPI by lazy { HOLDER.INSTANCE }
         private val auth: FirebaseAuth by lazy { HOLDER.mAuth }
         private val database: FirebaseDatabase by lazy { HOLDER.mDatabase }
-        private val rootRef = database.getReference(AppConstants.DATABASE.USERS)
+        private val storage : FirebaseStorage by lazy { HOLDER.mStorage }
+        private val databaseRootRef = database.getReference(AppConstants.DATABASE.USERS)
+        private val storageRootRef = storage.getReference(AppConstants.DATABASE.USERS)
     }
 
     suspend fun currentUser(): FirebaseUser? = withContext(Dispatchers.IO){
@@ -45,7 +49,7 @@ class FirebaseAPI private constructor(){
     }
 
     suspend fun addNewUserOnDatabase(name : String) = withContext(Dispatchers.IO) {
-        rootRef.child(auth.currentUser?.uid.toString())
+        databaseRootRef.child(auth.currentUser?.uid.toString())
             .child(AppConstants.DATABASE.USER_INFO)
             .child(AppConstants.DATABASE.NAME)
             .setValue(name)
@@ -56,14 +60,14 @@ class FirebaseAPI private constructor(){
             AppConstants.DATABASE.TASK_TITLE to task.title,
             AppConstants.DATABASE.TASK_DESCRIPTION to task.description,
         )
-        rootRef.child(auth.currentUser?.uid.toString())
+        databaseRootRef.child(auth.currentUser?.uid.toString())
             .child(AppConstants.DATABASE.TASK_LIST)
             .child(task.id.toString())
             .updateChildren(mapTask)
     }
 
     suspend fun deleteTask(task : TaskDomain) = withContext(Dispatchers.IO){
-        rootRef.child(auth.currentUser?.uid.toString())
+        databaseRootRef.child(auth.currentUser?.uid.toString())
             .child(AppConstants.DATABASE.TASK_LIST).child(task.id.toString()).removeValue()
     }
 
@@ -79,4 +83,24 @@ class FirebaseAPI private constructor(){
         return@withContext auth.sendPasswordResetEmail(email)
     }
 
+    suspend fun saveImage(uri : Uri?) = withContext(Dispatchers.IO){
+       if(uri != null){
+           storageRootRef
+               .child(auth.currentUser?.uid.toString())
+               .child(AppConstants.DATABASE.IMAGES)
+               .child(AppConstants.DATABASE.COVER_PHOTO)
+               .putFile(uri)
+               .addOnSuccessListener {task ->
+                   task.metadata!!.reference!!.downloadUrl
+                       .addOnSuccessListener {url ->
+                           val imgUrl = url.toString()
+                           databaseRootRef
+                               .child(auth.currentUser?.uid.toString())
+                               .child(AppConstants.DATABASE.USER_INFO)
+                               .child(AppConstants.DATABASE.COVER_PHOTO)
+                               .setValue(imgUrl)
+                       }
+               }
+       }
+    }
 }

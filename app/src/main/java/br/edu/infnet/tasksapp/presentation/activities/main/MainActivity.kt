@@ -3,15 +3,20 @@ package br.edu.infnet.tasksapp.presentation.activities.main
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.infnet.tasksapp.databinding.ActivityMainBinding
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
@@ -29,6 +34,7 @@ import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
 import br.edu.infnet.tasksapp.presentation.activities.sorted_list.SortedListActivity
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewFragment
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
@@ -39,11 +45,22 @@ import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel : MainActivityViewModel by inject()
-    private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
+    private val viewModel: MainActivityViewModel by inject()
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val dialogEditTextActivity = DialogEditTextActivity(this)
     private val fragmentTaskList = TaskListRecyclerViewFragment()
-    lateinit var userId : String
+    lateinit var userId: String
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navigationView : NavigationView
+    private lateinit var headerView : View
+    private lateinit var imageHeaderView : ImageView
+    val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
+        imageHeaderView.setImageURI(it)
+        if (it != null){
+            viewModel.saveImage(it)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +69,26 @@ class MainActivity : AppCompatActivity() {
         binding.mainToolbar.title = getString(R.string.tasks)
         binding.mainToolbar.setTitleTextColor(Color.WHITE)
 
-       setSupportActionBar(binding.mainToolbar)
+        setSupportActionBar(binding.mainToolbar)
 
-        if(savedInstanceState == null){
+        // Initialize the toggle
+        toggle = ActionBarDrawerToggle(
+            this, binding.mainDrawerLayout, binding.mainToolbar,
+            R.string.navigation_drawer_open_key,
+            R.string.navigation_drawer_close_key
+        )
+
+        // Set the toggle as the drawer listener
+        binding.mainDrawerLayout.addDrawerListener(toggle)
+
+        // Synchronize the state of the toggle with the drawer layout
+        toggle.syncState()
+
+        navigationView = findViewById(R.id.nv_main)
+        headerView = navigationView.getHeaderView(0)
+        imageHeaderView = headerView.findViewById(R.id.nav_imageView)
+
+        if (savedInstanceState == null) {
             val bundle = bundleOf(getString(R.string.sorted_key) to false)
             fragmentTaskList.arguments = bundle
 
@@ -67,20 +101,25 @@ class MainActivity : AppCompatActivity() {
         setupListener()
     }
 
-    private fun setupListener(){
-        binding.fabAdd.setOnClickListener{
+    private fun setupListener() {
+        binding.fabAdd.setOnClickListener {
             showDialog()
         }
+
+        headerView.setOnClickListener {
+            pickImage.launch("image/*")
+        }
+
     }
 
-    private fun showDialog(){
+    private fun showDialog() {
         dialogEditTextActivity.showDialog(
             title = getString(R.string.title_new_task),
             topicTitle1 = getString(R.string.subtitle_new_task_title),
             placeHolder1 = getString(R.string.label_new_task_name),
             topicTitle2 = getString(R.string.subtitle_new_task_description),
             placeHolder2 = getString(R.string.label_new_task_description)
-        ){results ->
+        ) { results ->
             viewModel.insert(results.first, results.second, userId)
         }
     }
@@ -91,7 +130,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.main_activity_menu_logoff -> {
                 lifecycleScope.launch {
                     viewModel.logoff()
@@ -99,22 +138,23 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             }
+
             R.id.main_activity_menu_sorted_task_list -> {
-                startActivity(Intent(this,SortedListActivity::class.java))
+                startActivity(Intent(this, SortedListActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getUserId(){
-        viewModel.getUserId().observe(this){id ->
+    private fun getUserId() {
+        viewModel.getUserId().observe(this) { id ->
             userId = id
         }
     }
 
-    fun<T> Flow<T>.observe(owner : LifecycleOwner, observe : (T) -> Unit){
+    fun <T> Flow<T>.observe(owner: LifecycleOwner, observe: (T) -> Unit) {
         owner.lifecycleScope.launch {
-            owner.repeatOnLifecycle(Lifecycle.State.STARTED){
+            owner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 this@observe.collect(observe)
             }
         }

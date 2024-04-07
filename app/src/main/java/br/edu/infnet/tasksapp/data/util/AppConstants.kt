@@ -9,6 +9,8 @@ class AppConstants private constructor(){
         const val TASK_LIST = "tasks"
         const val TASK_DESCRIPTION = "description"
         const val TASK_TITLE = "title"
+        const val IMAGES = "images"
+        const val COVER_PHOTO = "cover_photo"
     }
 
 }
