@@ -8,11 +8,17 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class FirebaseAPI private constructor(){
 
@@ -102,5 +108,28 @@ class FirebaseAPI private constructor(){
                        }
                }
        }
+    }
+
+    suspend fun getCoverPhotoURL() : String = suspendCoroutine{ continuation ->
+        databaseRootRef
+            .child(auth.currentUser?.uid.toString())
+            .child(AppConstants.DATABASE.USER_INFO)
+            .child(AppConstants.DATABASE.COVER_PHOTO)
+            .addListenerForSingleValueEvent(
+                object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()){
+                            val url = snapshot.value.toString()
+                            continuation.resume(url)
+                        }else{
+                            continuation.resume("")
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
     }
 }

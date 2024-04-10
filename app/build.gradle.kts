@@ -75,7 +75,10 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Dependency Injection
-    implementation("io.insert-koin:koin-android:3.1.2")
+    implementation("io.insert-koin:koin-android:3.1.3")
+
+    //picasso
+    implementation("com.squareup.picasso:picasso:2.8")
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")

@@ -2,6 +2,8 @@ package br.edu.infnet.tasksapp.presentation.activities.main
 
 import android.content.Context
 import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.edu.infnet.tasksapp.api.FirebaseAPI
@@ -27,6 +29,12 @@ class MainActivityViewModel(
 
     private val firebaseAPI = FirebaseAPI.instance
     private val dataStoreManager = DataStoreManager.getInstance(context)
+    private val _imageUrl = MutableLiveData<String>()
+    val imageUrl : LiveData<String> = _imageUrl
+
+    init {
+        getCoverPhotoURL()
+    }
 
     fun insert(title : String, description : String, userId : String) = viewModelScope.launch{
         insertTasksUseCase(TaskDomain(
@@ -49,6 +57,12 @@ class MainActivityViewModel(
     fun saveImage(uri : Uri?){
         viewModelScope.launch {
            firebaseAPI.saveImage(uri)
+        }
+    }
+
+    private fun getCoverPhotoURL(){
+        viewModelScope.launch {
+            _imageUrl.value = firebaseAPI.getCoverPhotoURL()
         }
     }
 

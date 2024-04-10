@@ -22,6 +22,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
@@ -35,6 +36,7 @@ import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
 import br.edu.infnet.tasksapp.presentation.activities.sorted_list.SortedListActivity
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewFragment
 import com.google.android.material.navigation.NavigationView
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
@@ -109,6 +111,12 @@ class MainActivity : AppCompatActivity() {
         headerView.setOnClickListener {
             pickImage.launch("image/*")
         }
+
+        viewModel.imageUrl.observe(this, Observer {url ->
+            if (url != ""){
+                Picasso.get().load(url).into(imageHeaderView)
+            }
+        })
 
     }
 
