@@ -126,7 +126,9 @@ class MainActivity : AppCompatActivity() {
             topicTitle1 = getString(R.string.subtitle_new_task_title),
             placeHolder1 = getString(R.string.label_new_task_name),
             topicTitle2 = getString(R.string.subtitle_new_task_description),
-            placeHolder2 = getString(R.string.label_new_task_description)
+            placeHolder2 = getString(R.string.label_new_task_description),
+            topicTitle3 = getString(R.string.subtitle_new_task_experation_date),
+            placeHolder3 = getString(R.string.label_new_task_expiration_date)
         ) { results ->
             viewModel.insert(results.first, results.second, userId)
         }

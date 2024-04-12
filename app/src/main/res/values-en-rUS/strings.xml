@@ -8,8 +8,10 @@
     <string name="label_empty_tasks">We do not have any task</string>
     <string name="label_new_task_name">Task Name</string>
     <string name="label_new_task_description">Task Description</string>
+    <string name="label_new_task_expiration_date">Expiration Task Date</string>
     <string name="subtitle_new_task_title">Name</string>
     <string name="subtitle_new_task_description">Description</string>
+    <string name="subtitle_new_task_experation_date">Expiration Date</string>
     <string name="title_new_task">New Task</string>
     <string name="name">Name</string>
     <string name="to_register">Register</string>
@@ -58,5 +60,6 @@
     <string name="sorted_list">Sorted list</string>
     <string name="navigation_drawer_open_key">navigation_drawer_open</string>
     <string name="navigation_drawer_close_key">navigation_drawer_close</string>
+    <string name="fill_all_fields">Fill all fields</string>
 
 </resources>
