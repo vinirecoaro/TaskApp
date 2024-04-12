@@ -65,6 +65,7 @@ class FirebaseAPI private constructor(){
         val mapTask = mapOf(
             AppConstants.DATABASE.TASK_TITLE to task.title,
             AppConstants.DATABASE.TASK_DESCRIPTION to task.description,
+            AppConstants.DATABASE.TASK_EXPIRATION_DATE to task.expirationDate,
         )
         databaseRootRef.child(auth.currentUser?.uid.toString())
             .child(AppConstants.DATABASE.TASK_LIST)

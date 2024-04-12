@@ -36,11 +36,12 @@ class MainActivityViewModel(
         getCoverPhotoURL()
     }
 
-    fun insert(title : String, description : String, userId : String) = viewModelScope.launch{
+    fun insert(title : String, description : String, userId : String, expirationDate : String) = viewModelScope.launch{
         insertTasksUseCase(TaskDomain(
             title = title,
             description = description,
-            userId = userId
+            userId = userId,
+            expirationDate = expirationDate
         ))
     }
 

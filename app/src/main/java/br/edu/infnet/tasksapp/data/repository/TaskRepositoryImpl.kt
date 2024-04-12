@@ -18,7 +18,8 @@ class TaskRepositoryImpl(private val dao : TaskDao, private val firebaseAPI : Fi
             id.toInt(),
             task.title,
             task.description,
-            task.userId
+            task.userId,
+            task.expirationDate
         )
         firebaseAPI.addTask(taskToFirebase)
     }

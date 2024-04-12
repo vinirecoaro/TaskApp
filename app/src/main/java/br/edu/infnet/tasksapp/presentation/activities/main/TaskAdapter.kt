@@ -13,10 +13,10 @@ class TaskAdapter(private var taskList : List<TaskDomain>) : RecyclerView.Adapte
 
     class ViewHolder(private val binding : ItemTaskBinding) : RecyclerView.ViewHolder(binding.root){
 
-
         fun bind(item : TaskDomain){
             binding.tvTitle.text = item.title
             binding.tvDescription.text = item.description
+            binding.tvExpirationDate.text = item.expirationDate
         }
     }
 

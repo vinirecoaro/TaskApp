@@ -11,5 +11,6 @@ data class Task(
     @PrimaryKey(autoGenerate = true) val id : Int = 0,
     @ColumnInfo(name = "title") val title : String,
     @ColumnInfo(name = "description") val description : String,
-    @ColumnInfo(name = "userId") val userId : String
+    @ColumnInfo(name = "userId") val userId : String,
+    @ColumnInfo(name = "expirationDate") val expirationDate : String
 )

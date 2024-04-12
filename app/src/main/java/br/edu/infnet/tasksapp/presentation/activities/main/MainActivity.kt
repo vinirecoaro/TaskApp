@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
             topicTitle3 = getString(R.string.subtitle_new_task_experation_date),
             placeHolder3 = getString(R.string.label_new_task_expiration_date)
         ) { results ->
-            viewModel.insert(results.first, results.second, userId)
+            viewModel.insert(results.first, results.second, userId, results.third)
         }
     }
 

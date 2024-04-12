@@ -8,10 +8,12 @@ data class Task(
     val id : Int = 0,
     val title : String,
     val description : String,
-    val userId : String
+    val userId : String,
+    val expirationDate : String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
@@ -23,6 +25,7 @@ data class Task(
         parcel.writeString(title)
         parcel.writeString(description)
         parcel.writeString(userId)
+        parcel.writeString(expirationDate)
     }
 
     override fun describeContents(): Int {

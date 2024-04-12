@@ -7,12 +7,14 @@ fun TaskDomain.toEntity() = TaskEntity(
     id = id,
     title = title,
     description = description,
-    userId = userId
+    userId = userId,
+    expirationDate = expirationDate
 )
 
 fun TaskEntity.toDomain() = TaskDomain(
     id = id,
     title = title,
     description = description,
-    userId = userId
+    userId = userId,
+    expirationDate = expirationDate
 )
