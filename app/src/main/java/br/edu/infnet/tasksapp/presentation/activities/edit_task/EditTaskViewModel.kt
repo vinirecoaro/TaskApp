@@ -25,24 +25,26 @@ class EditTaskViewModel(
     private val deleteTaskUseCase: DeleteTaskUseCase
 ) : ViewModel() {
 
-    /*fun update(id : Int, title : String, description : String, userId : String) = viewModelScope.launch {
+    fun update(id : Int, title : String, description : String, userId : String, expirationDate : String) = viewModelScope.launch {
         updateTasksUseCase(TaskDomain(
             id = id,
             title = title,
             description = description,
             userId = userId,
+            expirationDate = expirationDate
         ))
     }
 
-    fun delete(id : Int, title : String, description : String, userId : String) = viewModelScope.launch {
+    fun delete(id : Int, title : String, description : String, userId : String, expirationDate : String) = viewModelScope.launch {
         deleteTaskUseCase(
             TaskDomain(
                 id = id,
                 title = title,
                 description = description,
-                userId = userId
+                userId = userId,
+                expirationDate = expirationDate
             )
         )
-    }*/
+    }
 
 }

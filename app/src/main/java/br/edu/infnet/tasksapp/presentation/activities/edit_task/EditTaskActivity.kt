@@ -47,12 +47,13 @@ class EditTaskActivity : AppCompatActivity() {
         val task = intent.getParcelableExtra<TaskDomain>(getString(R.string.task_intent))
         when(item.itemId){
             R.id.save_edit_task_menu -> {
-                /*viewModel.update(
+                viewModel.update(
                     task!!.id,
                     binding.etTitleEditTask.text.toString(),
                     binding.etDescriptionEditTask.text.toString(),
-                    task.userId
-                )*/
+                    task.userId,
+                    binding.etExpirationDateEditTask.text.toString()
+                )
                 val resultIntent = Intent().apply {
                     putExtra(getString(R.string.edit_intent), getString(R.string.edit_intent))
                 }
@@ -77,6 +78,8 @@ class EditTaskActivity : AppCompatActivity() {
         if(task != null){
             binding.etTitleEditTask.setText(task.title)
             binding.etDescriptionEditTask.setText(task.description)
+            binding.etDescriptionEditTask.setText(task.description)
+            binding.etExpirationDateEditTask.setText(task.expirationDate)
         }
     }
 
@@ -85,12 +88,13 @@ class EditTaskActivity : AppCompatActivity() {
             .setTitle(getString(R.string.delete_task_alert_dialog_title))
             .setMessage(getString(R.string.delete_task_alert_dialog_message))
             .setPositiveButton(getString(R.string.to_confirm)){_,_ ->
-                /*viewModel.delete(
+                viewModel.delete(
                     task.id,
                     binding.etTitleEditTask.text.toString(),
                     binding.etDescriptionEditTask.text.toString(),
-                    task.userId
-                )*/
+                    task.userId,
+                    binding.etExpirationDateEditTask.text.toString()
+                )
                 val resultIntent = Intent().apply {
                     putExtra(getString(R.string.edit_intent), getString(R.string.delete_intent))
                 }
