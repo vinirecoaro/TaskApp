@@ -62,5 +62,8 @@
     <string name="navigation_drawer_close_key">navigation_drawer_close</string>
     <string name="fill_all_fields">Fill all fields</string>
     <string name="invalid_date">Invalid Date</string>
+    <string name="fetch">fetch</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 
 </resources>
