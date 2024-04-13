@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -36,6 +37,8 @@ import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
 import br.edu.infnet.tasksapp.presentation.activities.sorted_list.SortedListActivity
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
