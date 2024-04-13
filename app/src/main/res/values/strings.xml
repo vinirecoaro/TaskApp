@@ -8,7 +8,7 @@
     <string name="label_empty_tasks">Não temos nenhuma tarefa</string>
     <string name="label_new_task_name">Nome da Tarefa</string>
     <string name="label_new_task_description">Descrição da Tarefa</string>
-    <string name="label_new_task_expiration_date">Data de Expiração da Tarefa</string>
+    <string name="label_new_task_expiration_date">Data de Expiração Ex: 12/04/2023</string>
     <string name="subtitle_new_task_title">Nome</string>
     <string name="subtitle_new_task_description">Descrição</string>
     <string name="subtitle_new_task_experation_date">Data de Expiração</string>
@@ -61,5 +61,6 @@
     <string name="navigation_drawer_open_key">navigation_drawer_open</string>
     <string name="navigation_drawer_close_key">navigation_drawer_close</string>
     <string name="fill_all_fields">Preencha todos os campos</string>
+    <string name="invalid_date">Data Inválida</string>
 
 </resources>

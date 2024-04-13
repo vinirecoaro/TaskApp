@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.widget.Toast
 import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.ActivityDialogEditTextBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DialogEditTextActivity(private val activity: Activity) {
 
@@ -28,15 +30,18 @@ class DialogEditTextActivity(private val activity: Activity) {
         val alertDialog = AlertDialog.Builder(activity)
             .setView(binding.root)
             .setPositiveButton(activity.getString(R.string.to_confirm)) { _, _ ->
-                val text1 = editText1.text.toString()
-                val text2 = editText2.text.toString()
-                val text3 = editText3.text.toString()
-                if(text1.isEmpty() || text2.isEmpty() || text3.isEmpty()){
-                    Toast.makeText(activity.applicationContext, activity.getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show()
-                }else{
-                    onConfirm(Triple(text1, text2, text3))
-                }
 
+                    val text1 = editText1.text.toString()
+                    val text2 = editText2.text.toString()
+                    val text3 = editText3.text.toString()
+                    if(text1.isEmpty() || text2.isEmpty() || text3.isEmpty()){
+                        Toast.makeText(activity.applicationContext, activity.getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show()
+                    }else if(!isValidDateFormat(text3)){
+                        Toast.makeText(activity.applicationContext, activity.getString(R.string.invalid_date), Toast.LENGTH_LONG).show()
+                    }
+                    else{
+                        onConfirm(Triple(text1, text2, text3))
+                    }
             }
             .setNegativeButton(activity.getString(R.string.to_cancel)) { dialog, _ ->
                 dialog.dismiss()
@@ -44,6 +49,18 @@ class DialogEditTextActivity(private val activity: Activity) {
             .create()
 
         alertDialog.show()
+    }
+
+    fun isValidDateFormat(dateString: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        dateFormat.isLenient = false
+
+        return try {
+            dateFormat.parse(dateString)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
 }

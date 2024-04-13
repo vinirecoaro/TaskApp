@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ExpiredTaskNotificationService : Service() {
 
@@ -48,19 +51,25 @@ class ExpiredTaskNotificationService : Service() {
                     )
                     notificationManager.createNotificationChannel(channel)
 
+                    var hasExpiredTasks = false
                     var body = "Tem tarefas expiradas: "
+
                     for (item in taskList){
-
-                        body = "$body\n${item.title}"
-
+                        if(isDateAfterReference(getCurrentDate(), item.expirationDate)){
+                            body = "$body\n${item.title}"
+                            hasExpiredTasks = true
+                        }
                     }
-                    val notificationBuilder = NotificationCompat.Builder(appContext, "Todo_channel")
-                        .setContentTitle("Tarefas expiradas")
-                        .setContentText(body)
-                        .setSmallIcon(androidx.core.R.drawable.notification_bg)
-                        .setAutoCancel(true)
 
-                    notificationManager.notify(12, notificationBuilder.build())
+                    if(hasExpiredTasks){
+                        val notificationBuilder = NotificationCompat.Builder(appContext, "Todo_channel")
+                            .setContentTitle("Tarefas expiradas")
+                            .setContentText(body)
+                            .setSmallIcon(androidx.core.R.drawable.notification_bg)
+                            .setAutoCancel(true)
+
+                        notificationManager.notify(12, notificationBuilder.build())
+                    }
                 }
             }
         }
@@ -68,4 +77,26 @@ class ExpiredTaskNotificationService : Service() {
 
         return super.onStartCommand(intent, flags, startId)
     }
+
+
+    fun isDateAfterReference(dateString: String, referenceDate: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        dateFormat.isLenient = false
+
+        return try {
+            val date1 = dateFormat.parse(dateString)
+            val date2 = dateFormat.parse(referenceDate)
+
+            date1.after(date2)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val currentDate = Calendar.getInstance().time
+        return dateFormat.format(currentDate)
+    }
+
 }
