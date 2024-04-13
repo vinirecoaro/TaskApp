@@ -65,5 +65,12 @@
     <string name="fetch">buscar</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="weather_data">Dados sobre o tempo</string>
+    <string name="error_on_fetch_weather_data">Erro ao recuperar dados</string>
+    <string name="weather_forecast">Previsão do Tempo - </string>
+    <string name="maximum_temperature">Temperatura Máxima - </string>
+    <string name="minimum_temperature">Temperatura Mínima - </string>
+    <string name="thermal_sensation">Sensação Térmica - </string>
+    <string name="weather_data_title">Dados sobre o tempo</string>
 
 </resources>

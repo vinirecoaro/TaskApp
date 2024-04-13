@@ -10,4 +10,8 @@
         android:id="@+id/main_activity_menu_sorted_task_list"
         android:title="@string/sorted_list"/>
 
+    <item
+        android:id="@+id/main_activity_menu_weather_data"
+        android:title="@string/weather_data"/>
+
 </menu>

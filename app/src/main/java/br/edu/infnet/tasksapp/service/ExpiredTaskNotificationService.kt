@@ -75,7 +75,7 @@ class ExpiredTaskNotificationService : Service() {
         }
 
 
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
 

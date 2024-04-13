@@ -35,6 +35,7 @@ import br.edu.infnet.tasksapp.presentation.dialog.DialogEditTextActivity
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.login.LoginActivity
 import br.edu.infnet.tasksapp.presentation.activities.sorted_list.SortedListActivity
+import br.edu.infnet.tasksapp.presentation.activities.weather.WeatherActivity
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
@@ -154,6 +155,10 @@ class MainActivity : AppCompatActivity() {
 
             R.id.main_activity_menu_sorted_task_list -> {
                 startActivity(Intent(this, SortedListActivity::class.java))
+            }
+
+            R.id.main_activity_menu_weather_data -> {
+                startActivity(Intent(this, WeatherActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
