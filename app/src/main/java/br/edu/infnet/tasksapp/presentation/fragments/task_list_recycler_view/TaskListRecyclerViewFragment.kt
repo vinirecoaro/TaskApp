@@ -19,6 +19,7 @@ import br.edu.infnet.tasksapp.R
 import br.edu.infnet.tasksapp.databinding.FragmentTaskListRecyclerViewBinding
 import br.edu.infnet.tasksapp.presentation.activities.edit_task.EditTaskActivity
 import br.edu.infnet.tasksapp.presentation.activities.main.TaskAdapter
+import br.edu.infnet.tasksapp.service.ExpiredTaskNotificationService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -106,7 +107,14 @@ class TaskListRecyclerViewFragment : Fragment() {
         viewModel.getUserId().observe(this){id ->
             userId = id
             viewModel.getAllTasks(userId)
+            startNotificationService(id)
         }
+    }
+
+    private fun startNotificationService(userId : String){
+        val serviceIntent = Intent(requireContext(), ExpiredTaskNotificationService::class.java)
+        serviceIntent.putExtra("user_id", userId)
+        requireContext().startService(serviceIntent)
     }
 
     private fun setupAdapter(){

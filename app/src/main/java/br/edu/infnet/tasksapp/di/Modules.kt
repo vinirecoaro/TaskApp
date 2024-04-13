@@ -15,6 +15,7 @@ import br.edu.infnet.tasksapp.presentation.activities.reset_internal_password.Re
 import br.edu.infnet.tasksapp.presentation.activities.reset_internal_password.ResetInternalPasswordViewModel
 import br.edu.infnet.tasksapp.presentation.activities.reset_password.ResetPasswordViewModel
 import br.edu.infnet.tasksapp.presentation.fragments.task_list_recycler_view.TaskListRecyclerViewViewModel
+import br.edu.infnet.tasksapp.service.ExpiredTaskNotificationService
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -81,4 +82,5 @@ val appModule = module {
             androidContext()
         )
     }
+
 }
